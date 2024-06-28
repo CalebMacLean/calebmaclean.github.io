@@ -26,7 +26,7 @@ const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 console.log("-------------------------------------------");
 console.log("Pomodoro Config:");
 console.log("SECRET_KEY: ", SECRET_KEY);
-console.log("PORT: ", PORT);
+console.log("PORT: ", PORT.toString());
 console.log("BCRYPT_WORK_FACTOR: ", BCRYPT_WORK_FACTOR);
 console.log("Database: ", getDatabaseUri());
 console.log("-------------------------------------------");
