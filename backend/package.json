@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend logic for Pomodoro application",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Caleb MacLean",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.12.0"
+  }
+}
