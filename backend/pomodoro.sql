@@ -2,7 +2,7 @@
 \echo 'Delete and recreate pomodoro db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 -- Clear database, create schema, and seed data
-DROP DATABASE pomodoro;
+DROP DATABASE IF EXISTS pomodoro;
 CREATE DATABASE pomodoro;
 \connect pomodoro
 
@@ -12,7 +12,7 @@ CREATE DATABASE pomodoro;
 \echo 'Delete and recreate pomodoro_test db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
-DROP DATABASE pomodoro_test;
+DROP DATABASE IF EXISTS pomodoro_test;
 CREATE DATABASE pomodoro_test;
 \connect pomodoro_test
 

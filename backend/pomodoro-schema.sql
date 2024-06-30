@@ -23,7 +23,7 @@ CREATE TABLE friends (
     -- The username of the user who received the friend request
     receiver VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE,
     -- The status of the friend request
-    status BOOLEAN DEFAULT FALSE,
+    request_status BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (sender, receiver)
 );
 
@@ -49,6 +49,6 @@ CREATE TABLE tasks (
     -- Task Statistics
     expected_pomodoros INT DEFAULT 1,
     completed_cycles INT DEFAULT 0,
-     BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-)
+    completed_status BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,7 +1,7 @@
 -- inserts test users with the password 'password'
 INSERT INTO users (username, password, first_name, last_name, email, avatar, num_pomodoros, is_admin)
 VALUES ('testuser', 
-        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q'
+        '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q',
         'Test',
         'User',
         'testuser@email.com',
@@ -21,7 +21,7 @@ VALUES('testadmin',
        TRUE);
 
 -- inserts test friends
-INSERT INTO friends (sender, receiver, status)
+INSERT INTO friends (sender, receiver, request_status)
 VALUES ('testuser', 'testadmin', TRUE);
 
 -- inserts test lists

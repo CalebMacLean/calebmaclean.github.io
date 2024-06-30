@@ -4,7 +4,7 @@
 /** Database setup for Pomodoro App */
 // Imports
 const { Client } = require("pg");
-// const { getDatabaseUri } = require("./config")
+const { getDatabaseUri } = require("./config")
 
 // declare mutable database variable
 let db;
