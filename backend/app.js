@@ -7,6 +7,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { NotFoundError } = require("./expressError");
+const authRoutes = require("./routes/auth");
 
 // Application declaration and configurations
 const app = express();
@@ -18,15 +19,22 @@ app.use(express.json());
 // tiny is a predefined format that includes minimal req info when logging
 app.use(morgan("tiny"));
 
+// Routes
+app.use("/auth", authRoutes);
+
 /** Handle 404 errors --- Matches everything */
 app.use(function(req, res, next) {
+
     // console.log("Hit 404 Route Handler");
+
     return next( new NotFoundError() );
 });
 
 /** Generic Error Handler - Anything not handled lands here */
 app.use(function(err, req, res, next) {
-    console.log("Hit General Error Handling Route")
+
+    // console.log("Hit General Error Handling Route")
+
     // testing env should log errs to the console
     if ( process.env.NODE_ENV === "test" ) {
         console.log(err.stack);
