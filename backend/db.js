@@ -6,11 +6,16 @@
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config")
 
+// console.log("db.js process.env: ", process.env);
+
 // declare mutable database variable
 let db;
 
 // modify db to use either the db or testing db depending on enviornment
 if ( process.env.NODE_ENV === 'production') {
+
+    // console.log("NODE_ENV set to 'production': ", getDatabaseUri());
+
     db = new Client({
         connectionString: getDatabaseUri(),
         ssl: {
@@ -19,6 +24,9 @@ if ( process.env.NODE_ENV === 'production') {
     })
 }
 else {
+    
+    // console.log("NODE_ENV set to 'test': ", getDatabaseUri());
+
     db = new Client({
         connectionString: getDatabaseUri(),
     })
