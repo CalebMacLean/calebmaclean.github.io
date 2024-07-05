@@ -4,7 +4,7 @@
   "description": "backend logic for Pomodoro application",
   "main": "db.js",
   "scripts": {
-    "test": "jest -i",
+    "test": "NODE_ENV=test jest -i",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
