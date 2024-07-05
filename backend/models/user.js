@@ -21,7 +21,7 @@ class User {
      * Throws UnauthorizedError if user not found or wrong password.
      */
     static async authenticate(username, password) {
-        // try to find the user first
+        // try to find the user first, always use SQL query sanitization
         const result = await db.query(
             `
             SELECT username,
@@ -36,8 +36,24 @@ class User {
             WHERE username = $1
             `, [username],
         );
+        // access result's data
+        const user = result.rows[0];
 
+        console.log("GET user: ", user);
+        
+        // If there is a user, check passwords validity
+        if (user) {
+            // create hashed password to compare to user.password
+            const isValid = await bcrypt.compare(password, user.password);
+            // if password is valid, remove password from user and return
+            if (isValid === true) {
+                delete user.password;
+                return user;
+            }
+        }
 
+        // If there was no user or valid password throw UnauthorizedError
+        throw new UnauthorizedError("Invalid username/password");
     }
 }
 

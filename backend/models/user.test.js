@@ -27,7 +27,7 @@ afterAll(commonAfterAll);
 describe("authenticate class method", function() {
     test("works", async function () {
         // use User.authenticate, passing test data that should be included in beforeAll step
-        const user = User.authenticate("u1", "password1");
+        const user = await User.authenticate("u1", "password1");
         // check that an obj with {username, firstName, lastName, email, avatar, numPomodoros, isAdmin} is returned
         expect(user).toEqual({
             username: "u1",
