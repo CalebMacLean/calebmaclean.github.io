@@ -9,6 +9,7 @@ const {
     UnauthorizedError
 } = require("../expressError");
 const { BCRYPT_WORK_FACTOR } = require("../config");
+const { sqlForPartialUpdate } = require("../helpers/sql.js");
 
 /** Related Functions for users */
 class User {
@@ -185,29 +186,25 @@ class User {
         // if no data throw BadRequestError
         if( keys.length === 0 ) throw new BadRequestError("No data");
 
-        // js to sql conversion object
-        const userFields = {
-            firstName: 'first_name',
-            lastName: 'last_name',
-            numPomodoros: 'num_pomodoros',
-            isAdmin: 'is_admin'
-        }
+        /** NEED TO ABSTRACT OUT DYNAMIC QUERY LOGIC TO HELPER FUNCTION AND THEN REWORK THIS NEXT SECTION */
 
-        // for each key create a sanitized sql statement
-        const cols = keys.map((colName, idx) => `"${userFields[colName] || colName}"=$${idx+1}`
+        // use helper function sqlForPartialUpdate feeding in data and any columns that need to be converted
+        const { setCols, values } = sqlForPartialUpdate(
+            data,
+            {
+                firstName: "first_name",
+                lastName: "last_name",
+                numPomodoros: "num_pomodoros",
+                isAdmin: "is_admin"
+            }
         );
 
-        // create sql query string
-        const fields = cols.join(", ");
-        // get data values
-        const values = Object.values(data);
-
         // add a index for username
-        const usernameVarIdx = "$" + (values.length - 1);
+        const usernameVarIdx = "$" + (values.length + 1);
 
         // Make query string for database
         const querySQL = `UPDATE users
-                          SET ${fields}
+                          SET ${setCols}
                           WHERE username = ${usernameVarIdx}
                           RETURNING username,
                                     first_name AS "firstName",
@@ -226,6 +223,65 @@ class User {
 
         delete user.password;
         return user;
+    }
+
+    /** incrementPomodoros class method
+     * Will increase the num_pomodoros by one.
+     * 
+     * Parameters:
+     * - username: str - username for identifying the row
+     * 
+     * Returns: obj - { username, firstName, lastName, email, avatar, numPomodoros, isAdmin }
+     * 
+     * Throws not found error if no user is found.
+     */
+    static async incrementPomodoros(username) {
+        // make an update query that uses set to increase the pomodoros by 1
+        const result = await db.query(`
+            UPDATE users
+            SET num_pomodoros = num_pomodoros + 1
+            WHERE username = $1
+            RETURNING
+                username,
+                first_name AS "firstName",
+                last_name AS "lastName",
+                email,
+                avatar,
+                num_pomodoros AS "numPomodoros",
+                is_admin AS "isAdmin"`,
+            [username]);
+        
+        const updatedUser = result.rows[0];
+
+        // throw error if no user found
+        if( !updatedUser ) throw new NotFoundError(`No user: ${username}`);
+
+        return updatedUser;
+    }
+
+    /** remove class method
+     * Deletes a given user from database.
+     * 
+     * Parameters:
+     * - username: str - username for user identification
+     * 
+     * Returns: undefined
+     * 
+     * Throws NotFoundError if no user is found
+     */
+    static async remove(username) {
+        // make DELETE query to database
+        let result = await db.query(`
+            DELETE
+            FROM users
+            WHERE username = $1
+            RETURNING username`,
+            [username]
+        );
+        // access returned value
+        const user = result.rows[0];
+
+        if( !user ) throw new NotFoundError(`No user: ${username}`);
     }
 }
 

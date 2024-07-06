@@ -170,6 +170,7 @@ describe("update class method", function () {
         lastName: "NewF",
         email: "new@email.com",
         avatar: "assets/new_pfp.jpg",
+        numPomodoros: 0,
         isAdmin: true
     };
 
@@ -184,15 +185,72 @@ describe("update class method", function () {
     });
 
     test("bad request if no data", async function () {
-        expect.assertions(1);
+        expect.assertions(2);
         try{
-
+            await User.update("c1", {});
+            fail();
         }
         catch (err) {
             // err should be BadRequestError
             expect(err instanceof BadRequestError).toBeTruthy();
             // err should have a specific message
             expect(err.message).toEqual("No data");
+        }
+    });
+});
+
+/**************************************** incrementPomodoros */
+describe("incrementPomodoros class method", function () {
+    test("works", async function () {
+        // update u1's completed pomodoros
+        let updateUser = await User.incrementPomodoros("u1");
+        // only num_pomodoros should be changed
+        expect(updateUser).toEqual({
+            username: 'u1',
+            firstName: 'U1F',
+            lastName: 'U1L',
+            email: 'u1@email.com',
+            avatar: 'assets/default_pfp.jpg',
+            numPomodoros: 1,
+            isAdmin: false
+        });
+    });
+
+    test("Throws NotFoundError if no user", async function () {
+        try {
+            // update non-existant user
+            const updateUser = await User.incrementPomodoros("fakeUser");
+            fail();
+        }
+        catch (err) {
+            // should throw NotFoundError
+            expect(err instanceof NotFoundError).toBeTruthy();
+            // should have a specific message
+            expect(err.message).toEqual("No user: fakeUser");
+        }
+    });
+});
+
+/**************************************** remove */
+describe("remove class method", function () {
+    test("works", async function () {
+        // make remove query with u1
+        const result = await User.remove('u1');
+        // result should be undefined
+        expect(result).toEqual(undefined);
+    });
+
+    test("Throws NotFoundError if no user", async function () {
+        try {
+            // make remove query with non-existant user
+            const result = await User.remove('fakeUser');
+            fail();
+        }
+        catch (err) {
+            // err should be instance of NotFoundError
+            expect(err instanceof NotFoundError).toBeTruthy();
+            // err should have specific message
+            expect(err.message).toEqual("No user: fakeUser");
         }
     })
 })
