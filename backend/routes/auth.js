@@ -4,6 +4,10 @@ const express = require("express");
 const router = new express.Router();
 const { BadRequestError } = require("../expressError");
 
+// Will Need to import Schemas for authorization, a user model, and a jwt authentication helper function
+
+
+
 /** POST /auth/token: { username, password } => { token } 
  * 
  * Returns JWT token which will be used to authorize other request.
