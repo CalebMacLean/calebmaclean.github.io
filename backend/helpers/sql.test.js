@@ -1,4 +1,4 @@
-const { sqlForPartialUpdate } = require("./sql");
+const { sqlForPartialUpdate, sqlForPartialInsert } = require("./sql");
 
 
 describe("sqlForPartialUpdate", function () {
@@ -22,3 +22,30 @@ describe("sqlForPartialUpdate", function () {
     });
   });
 });
+
+
+describe("sqlForPartialInsert", function () {
+  test("works: 1 item", function () {
+    const result = sqlForPartialInsert(
+      { f1: "v1" },
+      { f1: "f1", fF2: "f2" }
+    )
+
+    expect(result).toEqual({
+      insertColumns: "f1",
+      valuesIndecies: '$1'
+    })
+  })
+
+  test("works: 2 items", function () {
+    const result = sqlForPartialInsert(
+      { f1: "v1", jsF2: "v2" },
+      { jsF2: "f2" }
+    );
+
+    expect(result).toEqual({
+      insertColumns: "f1, f2",
+      valuesIndecies: "$1, $2"
+    });
+  });
+})
