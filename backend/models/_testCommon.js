@@ -12,8 +12,9 @@ async function commonBeforeAll() {
     // clear rows in tables
     // noinspection SQLWithoutWhere
     await db.query("DELETE FROM users");
+    await db.query("DELETE FROM lists");
 
-    // insert values into tables, use hashed passwords
+    // insert values into users, use hashed passwords
     await db.query(`
         INSERT INTO users(
             username,
@@ -28,7 +29,23 @@ async function commonBeforeAll() {
         [
             await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
             await bcrypt.hash("password2", BCRYPT_WORK_FACTOR)
-        ]);
+        ]
+    );
+
+    // insert values into lists
+    await db.query(`
+        INSERT INTO lists
+            (username)
+        VALUES
+            ('u1')
+        RETURNING id, title`
+    );
+    await db.query(`
+        INSERT INTO lists
+            (username, title, list_type)
+        VALUES
+            ('u2', 'study tasks', FALSE)
+        RETURNING id, title`);
 };
 
 /** commonBeforeEach helper

@@ -186,8 +186,6 @@ class User {
         // if no data throw BadRequestError
         if( keys.length === 0 ) throw new BadRequestError("No data");
 
-        /** NEED TO ABSTRACT OUT DYNAMIC QUERY LOGIC TO HELPER FUNCTION AND THEN REWORK THIS NEXT SECTION */
-
         // use helper function sqlForPartialUpdate feeding in data and any columns that need to be converted
         const { setCols, values } = sqlForPartialUpdate(
             data,
