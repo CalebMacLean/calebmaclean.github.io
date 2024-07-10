@@ -154,3 +154,23 @@ describe("findAll class method", function () {
         ]);
     });
 });
+
+/**************************************** remove */
+describe("remove class method", function () {
+    test("works", async function () {
+        // make request
+        const result = await List.remove(2);
+
+        expect(result).toEqual(undefined);
+    });
+
+    test("after removal id sequence is reset", async function () {
+        // make request
+        const removeRes = await List.remove(2);
+        expect(removeRes).toEqual(undefined);
+
+        // Add a new list
+        const insertRes = await List.add('u1', {title: 'list name'});
+        expect(insertRes.id).toEqual(2);
+    })
+})

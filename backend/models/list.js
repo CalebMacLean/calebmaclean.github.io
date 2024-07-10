@@ -167,6 +167,34 @@ class List {
 
         return result.rows;
     }
+
+    /** remove class method
+     * Deletes a give list from database.
+     * 
+     * Parameters:
+     * id: int - valid list id.
+     * 
+     * Returns: undefined
+     * 
+     * Throws NotFoundError if no list is found.
+     */
+    static async remove(id) {
+        // make DELETE query to database
+        const result = await db.query(`
+            DELETE
+            FROM lists
+            WHERE id = $1
+            RETURNING id`,
+            [id]
+        );
+
+        const removedId = result.rows[0].id;
+
+        // reset sequence if successful
+        if( removedId ) {
+            db.query(`ALTER SEQUENCE lists_id_seq RESTART WITH ${id}`);
+        }
+    }
 }
 
 // Exports
