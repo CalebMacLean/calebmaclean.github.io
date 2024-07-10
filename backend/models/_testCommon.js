@@ -14,6 +14,9 @@ async function commonBeforeAll() {
     await db.query("DELETE FROM users");
     await db.query("DELETE FROM lists");
 
+    // Reset Primary keys for tables that need it
+    await db.query(`ALTER SEQUENCE lists_id_seq RESTART WITH 1`)
+
     // insert values into users, use hashed passwords
     await db.query(`
         INSERT INTO users(

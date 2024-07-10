@@ -56,3 +56,23 @@ describe("add class method", function () {
         }
     })
 });
+
+/**************************************** update */
+describe("update class method", function () {
+    test("works", async function () {
+        const dataToUpdate = {
+            title: "new",
+            listType: false
+        };
+
+        const result = await List.update(1, dataToUpdate);
+
+        expect(result).toEqual({
+            id: 1,
+            title: 'new',
+            listType: false,
+            createdAt: expect.any(Date),
+            expiredAt: null
+        });
+    })
+})
