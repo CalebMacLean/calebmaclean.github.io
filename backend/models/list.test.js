@@ -59,11 +59,12 @@ describe("add class method", function () {
 
 /**************************************** update */
 describe("update class method", function () {
+    const dataToUpdate = {
+        title: "new",
+        listType: false
+    };
+
     test("works", async function () {
-        const dataToUpdate = {
-            title: "new",
-            listType: false
-        };
 
         const result = await List.update(1, dataToUpdate);
 
@@ -74,5 +75,30 @@ describe("update class method", function () {
             createdAt: expect.any(Date),
             expiredAt: null
         });
+    });
+
+    test("throws NotFoundError if list id is invalid", async function () {
+        try {
+            // make request with List.update to invalid id
+            const result = await List.update(100, dataToUpdate);
+            fail();
+        }
+        catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+            expect(err.message).toEqual("List not found");
+        }
+    });
+
+    test("throws BadRequestError if no data is passed", async function () {
+        try{
+            // make request with List.update with no id
+            const result = await List.update(1, {});
+            fail();
+        }
+        catch (err) {
+            expect(err instanceof BadRequestError).toBeTruthy();
+            expect(err.message).toEqual("No data")
+        }
     })
+
 })
