@@ -127,5 +127,30 @@ describe("get class method", function () {
             expect(err instanceof NotFoundError).toBeTruthy();
             expect(err.message).toEqual(`No list at: 100`);
         }
-    })
-})
+    });
+});
+
+/**************************************** findAll */
+describe("findAll class method", function () {
+    test("works", async function () {
+        // make request
+        const result = await List.findAll();
+
+        expect(result).toEqual([
+            {
+                id: 1,
+                title: 'To-Do List',
+                listType: true,
+                createdAt: expect.any(Date),
+                expiredAt: null
+            },
+            {
+                id: 2,
+                title: 'study tasks',
+                listType: false,
+                createdAt: expect.any(Date),
+                expiredAt: null
+            }
+        ]);
+    });
+});

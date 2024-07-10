@@ -143,6 +143,30 @@ class List {
         // else return list
         return list;
     }
+
+    /** findAll class method
+     * Finds all of the list in the database.
+     * 
+     * Parameters: none
+     * 
+     * Returns: [{id, title, listType, createdAt, expiredAt}, ...]
+     */
+    static async findAll() {
+        // make request to database for all list
+        const result = await db.query(`
+            SELECT id,
+                   title,
+                   list_type AS "listType",
+                   created_at AS "createdAt",
+                   expired_at AS "expiredAt"
+            FROM lists
+            ORDER BY id`
+        );
+
+        console.log('findAll result: ', result.rows[0])
+
+        return result.rows;
+    }
 }
 
 // Exports
