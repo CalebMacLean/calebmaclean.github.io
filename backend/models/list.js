@@ -110,6 +110,39 @@ class List {
 
         return list;
     }
+
+    /** get class method
+     * Gets a list from the database
+     * 
+     * Parameters:
+     * -id: int - valid list id
+     * 
+     * Returns: {id, title, listType, createdAt, expiredAt}
+     * 
+     * Throws NotFoundError if list id is invalid
+     */
+    static async get(id) {
+        // search lists table for id
+        const result = await db.query(`
+            SELECT id,
+                   title,
+                   list_type AS "listType",
+                   created_at AS "createdAt",
+                   expired_at AS "expiredAt"
+            FROM lists
+            WHERE id = $1`,
+            [id]
+        );
+
+        // store results
+        const list = result.rows[0];
+
+        // throw error if there is no list
+        if( !list ) throw new NotFoundError(`No list at: ${id}`);
+
+        // else return list
+        return list;
+    }
 }
 
 // Exports

@@ -99,6 +99,33 @@ describe("update class method", function () {
             expect(err instanceof BadRequestError).toBeTruthy();
             expect(err.message).toEqual("No data")
         }
-    })
+    });
+});
 
+/**************************************** get */
+describe("get class method", function () {
+    test("works", async function () {
+        // make a request to the first list in db
+        const list = await List.get(1);
+
+        expect(list).toEqual({
+            id: 1,
+            title: 'To-Do List',
+            listType: true,
+            createdAt: expect.any(Date),
+            expiredAt: null
+        });
+    });
+
+    test("throws NotFoundError with invalid id", async function () {
+        try{
+            // make a request with an invalid id
+            const result = await List.get(100);
+            fail();
+        }
+        catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+            expect(err.message).toEqual(`No list at: 100`);
+        }
+    })
 })
