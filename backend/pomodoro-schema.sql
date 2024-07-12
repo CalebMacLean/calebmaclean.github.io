@@ -37,7 +37,8 @@ CREATE TABLE lists (
     list_type BOOLEAN DEFAULT TRUE,
     -- List Statistics
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expired_at TIMESTAMP
+    expired_at TIMESTAMP DEFAULT NULL
+        CHECK (expired_at IS NULL OR expired_at = TO_TIMESTAMP(expired_at::TEXT, 'YYYY-MM-DD HH24:MI:SS'))
 );
 
 CREATE TABLE tasks (

@@ -45,10 +45,10 @@ async function commonBeforeAll() {
     );
     await db.query(`
         INSERT INTO lists
-            (username, title, list_type)
+            (username, title, list_type, expired_at)
         VALUES
-            ('u2', 'study tasks', FALSE)
-        RETURNING id, title`);
+            ('u2', 'expired list', true, '06/12/2023')
+        RETURNING id, title`)
 };
 
 /** commonBeforeEach helper

@@ -19,17 +19,35 @@ class List {
      * 
      * Throws BadRequestError if no username passed
      */
-    static async add(username, data) {
+    static async add(data = {}) {
+
+        console.log("data before username removed: ", data);
+        // access username
+        const { username } = data;
         // check that a username was given, other columns have default values
         if ( !username ) throw new BadRequestError('No username');
+        // remove username from data
+        delete data.username;
+
+        // console.log("data", data);
 
         // access keys of data
         const keys = Object.keys(data);
+
         // If no data throw BadRequestError
         if( keys.length === 0 ) throw new BadRequestError('No data');
 
+
+        // console.log('expiredAt before conversion: ', data.expiredAt);
+        
+        // If expiredAt convert to string
+        if( data.expiredAt ) {
+            data.expiredAt = new Date(data.expiredAt);
+            console.log('expiredAt after conversion: ', data.expiredAt);
+        }
+
         // use sqlForPartialInsert to create values and columns for INSERT query
-        const { insertColumns, valuesIndecies, values } = sqlForPartialInsert(
+        let { insertColumns, valuesIndecies, values } = sqlForPartialInsert(
             data,
             {
                 listType: "list_type",
@@ -72,7 +90,7 @@ class List {
      * 
      * Throws BadRequestError if no update data is passed
      */
-    static async update(id, data) {
+    static async update(id, data = {}) {
         // Access keys of data obj
         const keys = Object.keys(data);
         // if no data throw BadRequestError
@@ -193,6 +211,35 @@ class List {
         // reset sequence if successful
         if( removedId ) {
             db.query(`ALTER SEQUENCE lists_id_seq RESTART WITH ${id}`);
+        }
+    }
+
+    /** removeExpired class method
+     * checks if a list object is expired and removes it if so.
+     * 
+     * Parameters:
+     * list: obj - { id, title, listType, createdAt, expiredAt }
+     * 
+     * Returns: undefined
+     * 
+     * Throws BadRequestError if no id, createdAt, or expiredAt in list object
+     */
+    static async removeExpired(list = {}) {
+        // check that list has necessary properties
+        if( !list.id ) throw new BadRequestError(`No id`);
+        if( !list.expiredAt ) throw new BadRequestError(`No expiredAt property`);
+
+        // check if expired date is passed
+        const currentDate = new Date();
+        const expiredDate = list.expiredAt;
+
+        if( expiredDate < currentDate ) {
+            try{
+                await this.remove(list.id);
+            } 
+            catch (err) {
+                throw BadRequestError(`Failed to remove list with id: ${list.id}`);
+            }
         }
     }
 }

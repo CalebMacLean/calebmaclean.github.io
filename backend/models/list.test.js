@@ -18,18 +18,20 @@ const {
 
 // Set Up & Tear Down
 // check models/_testCommon.js for clarification
-beforeAll(commonBeforeAll);
-beforeEach(commonBeforeEach);
-afterEach(commonAfterEach);
-afterAll(commonAfterAll);
+beforeAll(async () => await commonBeforeAll());
+beforeEach(async () => await commonBeforeEach());
+afterEach(async () => await commonAfterEach());
+afterAll(async () => await commonAfterAll());
 
 /**************************************** add */
 describe("add class method", function () {
     test("works", async function () {
         // use List.add to create a new list for u1
-        const result = await List.add('u1', {
+        const result = await List.add({
+            username: 'u1',
             title: 'new list',
-            listType: false
+            listType: false,
+            expiredAt: '01/05/2025'
         });
 
         expect(result).toEqual({
@@ -38,7 +40,7 @@ describe("add class method", function () {
             username: 'u1',
             listType: false,
             createdAt: expect.any(Date),
-            expiredAt: null
+            expiredAt: expect.any(Date)
         });
     });
 
@@ -146,10 +148,10 @@ describe("findAll class method", function () {
             },
             {
                 id: 2,
-                title: 'study tasks',
-                listType: false,
+                title: 'expired list',
+                listType: true,
                 createdAt: expect.any(Date),
-                expiredAt: null
+                expiredAt: expect.any(Date),
             }
         ]);
     });
@@ -170,7 +172,24 @@ describe("remove class method", function () {
         expect(removeRes).toEqual(undefined);
 
         // Add a new list
-        const insertRes = await List.add('u1', {title: 'list name'});
+        const insertRes = await List.add({username: 'u1', title: 'list name'});
         expect(insertRes.id).toEqual(2);
     })
 })
+
+/**************************************** removeExpired */
+describe("removeExpired class method", function () {
+    test("works", async function () {
+        // get the second list
+        const list = await List.get(2);
+        // call removeExpired
+        const expiredRes = await List.removeExpired(list);
+        expect(expiredRes).toEqual(undefined);
+
+        // check that the id sequence reset
+        const newList = await List.add({
+            username: 'u1',
+            listType: false});
+        expect(newList.id).toEqual(2);
+    })
+});
