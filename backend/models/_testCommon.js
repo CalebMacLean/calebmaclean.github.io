@@ -27,11 +27,13 @@ async function commonBeforeAll() {
             email)
         VALUES 
             ('u1', $1, 'U1F', 'U1L', 'u1@email.com'),
-            ('u2', $2, 'U2F', 'U2L', 'u2@email.com')
+            ('u2', $2, 'U2F', 'U2L', 'u2@email.com'),
+            ('u3', $3, 'U3F', 'U3L', 'u3@email.com')
         RETURNING username`,
         [
             await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
-            await bcrypt.hash("password2", BCRYPT_WORK_FACTOR)
+            await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
+            await bcrypt.hash('password3', BCRYPT_WORK_FACTOR)
         ]
     );
 
@@ -48,7 +50,15 @@ async function commonBeforeAll() {
             (username, title, list_type, expired_at)
         VALUES
             ('u2', 'expired list', true, '06/12/2023')
-        RETURNING id, title`)
+        RETURNING id, title`);
+    
+    // Insert values into friends
+    await db.query(`
+        INSERT INTO friends
+            (sender, receiver, request_status)
+        VALUES
+            ('u1', 'u2', false)
+        RETURNING sender, receiver, request_status`);
 };
 
 /** commonBeforeEach helper
