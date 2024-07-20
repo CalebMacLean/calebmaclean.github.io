@@ -125,6 +125,15 @@ describe("findAll class method", function () {
                 avatar: 'assets/default_pfp.jpg',
                 numPomodoros: 0,
                 isAdmin: false
+            },
+            {
+                username: 'u3',
+                firstName: 'U3F',
+                lastName: 'U3L',
+                email: 'u3@email.com',
+                avatar: 'assets/default_pfp.jpg',
+                numPomodoros: 0,
+                isAdmin: false
             }
         ]);
     });
