@@ -28,12 +28,16 @@ async function commonBeforeAll() {
         VALUES 
             ('u1', $1, 'U1F', 'U1L', 'u1@email.com'),
             ('u2', $2, 'U2F', 'U2L', 'u2@email.com'),
-            ('u3', $3, 'U3F', 'U3L', 'u3@email.com')
+            ('u3', $3, 'U3F', 'U3L', 'u3@email.com'),
+            ('u4', $4, 'U4F', 'U4L', 'u4@email.com'),
+            ('u5', $5, 'U5F', 'U5L', 'u5@email.com')
         RETURNING username`,
         [
             await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
             await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
-            await bcrypt.hash('password3', BCRYPT_WORK_FACTOR)
+            await bcrypt.hash('password3', BCRYPT_WORK_FACTOR),
+            await bcrypt.hash('password4', BCRYPT_WORK_FACTOR),
+            await bcrypt.hash('password5', BCRYPT_WORK_FACTOR)
         ]
     );
 
@@ -57,7 +61,10 @@ async function commonBeforeAll() {
         INSERT INTO friends
             (sender, receiver, request_status)
         VALUES
-            ('u1', 'u2', false)
+            ('u1', 'u2', false),
+            ('u3', 'u1', false),
+            ('u2', 'u4', true),
+            ('u5', 'u2', true)
         RETURNING sender, receiver, request_status`);
 };
 

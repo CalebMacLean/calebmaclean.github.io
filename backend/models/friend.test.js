@@ -60,3 +60,121 @@ describe("get class method", function () {
         }
     })
 })
+
+/**************************************** findAllRequestBySender */
+describe("findAllRequestBySender class method", function () {
+    test("works", async function () {
+        // make request with u1
+        const result = await Friend.findAllRequestBySender('u1');
+
+        expect(result).toEqual([{
+            requestStatus: false,
+            username: 'u2',
+            avatar: 'assets/default_pfp.jpg',
+            firstName: 'U2F',
+            lastName: 'U2L'
+        }]);
+    });
+
+    test("works with true status", async function () {
+        const result = await Friend.findAllRequestBySender('u2', true);
+
+        expect(result).toEqual([{
+            requestStatus: true,
+            username: 'u4',
+            avatar: 'assets/default_pfp.jpg',
+            firstName: 'U4F',
+            lastName: 'U4L'
+        }]);
+    });
+});
+
+/**************************************** findAllRequestByReceiver */
+describe("findAllRequestByReceiver class method", function () {
+    test("works", async function () {
+        // make request with u2
+        const result = await Friend.findAllRequestByReceiver('u1');
+
+        expect(result).toEqual([{
+            requestStatus: false,
+            username: 'u3',
+            avatar: 'assets/default_pfp.jpg',
+            firstName: 'U3F',
+            lastName: 'U3L'
+        }]);
+    });
+
+    test("works with true status", async function () {
+        const result = await Friend.findAllRequestByReceiver('u2', true);
+
+        expect(result).toEqual([{
+            requestStatus: true,
+            username: 'u5',
+            avatar: 'assets/default_pfp.jpg',
+            firstName: 'U5F',
+            lastName: 'U5L'
+        }]);
+    });
+});
+
+/**************************************** findAllFriends */
+describe("findAllFriendsclass method", function () {
+    test("works", async function () {
+        // make request with u2
+        const result = await Friend.findAllFriends('u2');
+
+        expect(result).toEqual([
+            {
+            requestStatus: true,
+            username: 'u4',
+            avatar: 'assets/default_pfp.jpg',
+            firstName: 'U4F',
+            lastName: 'U4L'
+            },
+            {
+                requestStatus: true,
+                username: 'u5',
+                avatar: 'assets/default_pfp.jpg',
+                firstName: 'U5F',
+                lastName: 'U5L'
+            }
+        ]);
+    });
+});
+
+/**************************************** acceptRequest */
+describe("acceptRequest class method", function () {
+    test("works", async function () {
+        // make request with u2
+        const result = await Friend.acceptRequest('u1', 'u2');
+
+        expect(result).toEqual({
+            requestStatus: true,
+            username: 'u1',
+            firstName: 'U1F',
+            lastName: 'U1L'
+        });
+    });
+});
+
+/**************************************** remove */
+describe("remove class method", function () {
+    test("works", async function () {
+        // make request with u1 and u2
+        const result = await Friend.remove('u1', 'u2');
+
+        expect(result).toEqual(undefined);
+    });
+
+    test("throws NotFoundError without valid username pairing", async function () {
+        try{
+            // make request with invalid usernames
+            await Friend.remove('fakeUser', 'testUser');
+            fail();
+        }
+        catch (err) {
+            expect(err instanceof NotFoundError).toBeTruthy();
+            expect(err.message).toEqual('fakeUser to testUser request not found');
+        }
+    })
+});
