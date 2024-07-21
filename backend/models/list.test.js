@@ -4,8 +4,7 @@
 // Imports
 const {
     NotFoundError,
-    BadRequestError,
-    UnauthorizedError
+    BadRequestError
 } = require("../expressError");
 const db = require("../db");
 const List = require("./list");
