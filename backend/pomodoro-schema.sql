@@ -23,7 +23,6 @@ CREATE TABLE friends (
     -- The username of the user who received the friend request
     receiver VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE,
     -- The status of the friend request
-    request_status BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (sender, receiver)
 );
 
@@ -37,8 +36,6 @@ CREATE TABLE lists (
     list_type BOOLEAN DEFAULT TRUE,
     -- List Statistics
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expired_at TIMESTAMP DEFAULT NULL
-        CHECK (expired_at IS NULL OR expired_at = TO_TIMESTAMP(expired_at::TEXT, 'YYYY-MM-DD HH24:MI:SS'))
 );
 
 CREATE TABLE tasks (
@@ -51,5 +48,3 @@ CREATE TABLE tasks (
     expected_pomodoros INT DEFAULT 1,
     completed_cycles INT DEFAULT 0,
     completed_status BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
