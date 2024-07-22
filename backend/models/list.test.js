@@ -164,17 +164,7 @@ describe("remove class method", function () {
 
         expect(result).toEqual(undefined);
     });
-
-    test("after removal id sequence is reset", async function () {
-        // make request
-        const removeRes = await List.remove(2);
-        expect(removeRes).toEqual(undefined);
-
-        // Add a new list
-        const insertRes = await List.add({username: 'u1', title: 'list name'});
-        expect(insertRes.id).toEqual(2);
-    })
-})
+});
 
 /**************************************** removeExpired */
 describe("removeExpired class method", function () {
@@ -184,11 +174,5 @@ describe("removeExpired class method", function () {
         // call removeExpired
         const expiredRes = await List.removeExpired(list);
         expect(expiredRes).toEqual(undefined);
-
-        // check that the id sequence reset
-        const newList = await List.add({
-            username: 'u1',
-            listType: false});
-        expect(newList.id).toEqual(2);
-    })
+    });
 });

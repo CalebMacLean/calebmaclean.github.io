@@ -16,6 +16,7 @@ async function commonBeforeAll() {
 
     // Reset Primary keys for tables that need it
     await db.query(`ALTER SEQUENCE lists_id_seq RESTART WITH 1`)
+    await db.query(`ALTER SEQUENCE tasks_id_seq RESTART WITH 1`)
 
     // insert values into users, use hashed passwords
     await db.query(`
@@ -66,6 +67,16 @@ async function commonBeforeAll() {
             ('u2', 'u4', true),
             ('u5', 'u2', true)
         RETURNING sender, receiver, request_status`);
+
+    // Insert values into tasks
+    await db.query(`
+        INSERT INTO tasks
+            (title, list_id, expected_pomodoros)
+        VALUES
+            ('task1', 1, 1),
+            ('task2', 1, 2),
+            ('task3', 1, 3)
+        RETURNING id`);
 };
 
 /** commonBeforeEach helper
