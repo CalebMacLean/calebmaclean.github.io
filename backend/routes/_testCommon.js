@@ -16,21 +16,24 @@ async function commonBeforeAll() {
         firstName: "U1F",
         lastName: "U1L",
         email: "u1@email.com",
-        password: "password1"
+        password: "password1",
+        isAdmin: false
     });
     await User.register({
         username: "u2",
         firstName: "U2F",
         lastName: "U2L",
         email: "u2@email.com",
-        password: "password2"
+        password: "password2",
+        isAdmin: false
     });
     await User.register({
         username: "u3",
         firstName: "U3F",
         lastName: "U3L",
         email: "u3@email.com",
-        password: "password3"
+        password: "password3",
+        isAdmin: false
     });
 }
 
