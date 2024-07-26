@@ -17,24 +17,21 @@ const { UnauthorizedError } = require("../expressError");
 
 function authenticateJWT(req, res, next) {
     try {
-        // console.log("Tokens are the same: ", 
-        //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0.FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc" === "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-        // "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-        // "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc")
-        // console.log("authenticateJWT start");
-        // console.log("authenticateJWT req.header: ", req.headers);
-        // console.log("authenticateJWT req.headers.authorization: ", req.headers.authorization)
         const authHeader = req.headers && req.headers.authorization;
         // console.log("authenticateJWT authHeader: ", authHeader);
 
         if (authHeader) {
-            console.log("authenticateJWT conditional reached");
-            console.log("secret key: ", SECRET_KEY);
+            // console.log("authenticateJWT conditional reached");
+
             const token = authHeader.replace(/^[Bb]earer /, "").trim();
-            console.log("token: ", token);
+
+            // console.log("auth token: ", token);
+
             res.locals.user = jwt.verify(token, SECRET_KEY);
+
+            // console.log("res.locals: ", res.locals);
         }
-        console.log("authenticateJWT res.locals.user", res.locals.user);
+        // console.log("authenticateJWT res.locals.user", res.locals.user);
         return next();
     } catch (err) {
         console.log(err);
@@ -86,7 +83,7 @@ function ensureCorrectUserOrAdmin(req, res, next) {
         // console.log("ensureCorrectUserOrAdmin res.locals: ", res.locals);
         // console.log("ensureCorrectUserOrAdmin res.locals.user: ", user);
         // console.log("ensureCorrectUserOrAdmin res.locals.user.username: ", user.username);
-        console.log("ensureCorrectUserOrAdmin req.params: ", req.params);
+        // console.log("ensureCorrectUserOrAdmin req.params: ", req.params);
 
         if (!(user && (user.isAdmin || user.username === req.params.username))) {
             throw new UnauthorizedError();

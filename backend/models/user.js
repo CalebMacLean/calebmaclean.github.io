@@ -104,7 +104,7 @@ class User {
         // return rows of result as user
         const user = result.rows[0];
 
-        console.log("Registered User: ", user);
+        // console.log("Registered User: ", user);
 
         return user;
     }

@@ -23,6 +23,8 @@ CREATE TABLE friends (
     -- The username of the user who received the friend request
     receiver VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE,
     -- The status of the friend request
+    request_status BOOLEAN DEFAULT FALSE
+        CHECK (request_status = FALSE OR request_status = TRUE),
     PRIMARY KEY (sender, receiver)
 );
 
@@ -32,10 +34,11 @@ CREATE TABLE lists (
     title VARCHAR(25) DEFAULT 'To-Do List',
     -- Reference to the users who have created or saved this list
     username VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE,
-    -- The list type can either be 'focus' time or 'break' time, 
+    -- The list type can either be 'focus' time (true) or 'break' time (false) 
     list_type BOOLEAN DEFAULT TRUE,
     -- List Statistics
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP
 );
 
 CREATE TABLE tasks (
@@ -47,4 +50,5 @@ CREATE TABLE tasks (
     -- Task Statistics
     expected_pomodoros INT DEFAULT 1,
     completed_cycles INT DEFAULT 0,
-    completed_status BOOLEAN DEFAULT FALSE,
+    completed_status BOOLEAN DEFAULT FALSE
+);

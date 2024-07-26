@@ -15,7 +15,7 @@ class List {
     /** add class method
      * adds list with a userId, title, and listType
      * 
-     * Returns { id, title, listType, createdAt, expiredAt }
+     * Returns { id, title, listType, createdAt, expiresAt }
      * 
      * Throws BadRequestError if no username passed
      */
@@ -38,12 +38,12 @@ class List {
         if( keys.length === 0 ) throw new BadRequestError('No data');
 
 
-        // console.log('expiredAt before conversion: ', data.expiredAt);
+        // console.log('expiresAt before conversion: ', data.expiresAt);
         
-        // If expiredAt convert to string
-        if( data.expiredAt ) {
-            data.expiredAt = new Date(data.expiredAt);
-            console.log('expiredAt after conversion: ', data.expiredAt);
+        // If expiresAt convert to string
+        if( data.expiresAt ) {
+            data.expiresAt = new Date(data.expiresAt);
+            console.log('expiresAt after conversion: ', data.expiresAt);
         }
 
         // use sqlForPartialInsert to create values and columns for INSERT query
@@ -52,7 +52,7 @@ class List {
             {
                 listType: "list_type",
                 createdAt: "created_at",
-                expiredAt: "expired_at"
+                expiresAt: "expires_at"
             }
         );
 
@@ -71,7 +71,7 @@ class List {
                 username,
                 list_type AS "listType",
                 created_at AS "createdAt",
-                expired_at AS "expiredAt"`;
+                expires_at AS "expiresAt"`;
 
         // try to insert new list to lists table
         const result = await db.query(queryString, [...values, username]);
@@ -86,7 +86,7 @@ class List {
      * id: int - valid list id
      * data: obj - contains fields:newVals
      * 
-     * Returns { id, title, listType, createdAt, expiredAt }
+     * Returns { id, title, listType, createdAt, expiresAt }
      * 
      * Throws BadRequestError if no update data is passed
      */
@@ -102,7 +102,7 @@ class List {
             {
                 listType: "list_type",
                 createdAt: 'created_at',
-                expiredAt: "expired_at"
+                expiresAt: "expires_at"
             }
         );
 
@@ -117,7 +117,7 @@ class List {
                                     title,
                                     list_type AS "listType",
                                     created_at AS "createdAt",
-                                    expired_at AS "expiredAt"`;
+                                    expires_at AS "expiresAt"`;
         
         // make query to database store results in var
         const result = await db.query(querySQL, [...values]);
@@ -135,7 +135,7 @@ class List {
      * Parameters:
      * -id: int - valid list id
      * 
-     * Returns: {id, title, listType, createdAt, expiredAt}
+     * Returns: {id, title, listType, createdAt, expiresAt}
      * 
      * Throws NotFoundError if list id is invalid
      */
@@ -146,7 +146,7 @@ class List {
                    title,
                    list_type AS "listType",
                    created_at AS "createdAt",
-                   expired_at AS "expiredAt"
+                   expires_at AS "expiresAt"
             FROM lists
             WHERE id = $1`,
             [id]
@@ -167,7 +167,7 @@ class List {
      * 
      * Parameters: none
      * 
-     * Returns: [{id, title, listType, createdAt, expiredAt}, ...]
+     * Returns: [{id, title, listType, createdAt, expiresAt}, ...]
      */
     static async findAll() {
         // make request to database for all list
@@ -176,7 +176,7 @@ class List {
                    title,
                    list_type AS "listType",
                    created_at AS "createdAt",
-                   expired_at AS "expiredAt"
+                   expires_at AS "expiresAt"
             FROM lists
             ORDER BY id`
         );
@@ -214,20 +214,20 @@ class List {
      * checks if a list object is expired and removes it if so.
      * 
      * Parameters:
-     * list: obj - { id, title, listType, createdAt, expiredAt }
+     * list: obj - { id, title, listType, createdAt, expiresAt }
      * 
      * Returns: undefined
      * 
-     * Throws BadRequestError if no id, createdAt, or expiredAt in list object
+     * Throws BadRequestError if no id, createdAt, or expiresAt in list object
      */
     static async removeExpired(list = {}) {
         // check that list has necessary properties
         if( !list.id ) throw new BadRequestError(`No id`);
-        if( !list.expiredAt ) throw new BadRequestError(`No expiredAt property`);
+        if( !list.expiresAt ) throw new BadRequestError(`No expiresAt property`);
 
         // check if expired date is passed
         const currentDate = new Date();
-        const expiredDate = list.expiredAt;
+        const expiredDate = list.expiresAt;
 
         if( expiredDate < currentDate ) {
             try{

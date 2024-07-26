@@ -134,6 +134,24 @@ describe("findAll class method", function () {
                 avatar: 'assets/default_pfp.jpg',
                 numPomodoros: 0,
                 isAdmin: false
+            },
+            {
+                username: 'u4',
+                firstName: 'U4F',
+                lastName: 'U4L',
+                email: 'u4@email.com',
+                avatar: 'assets/default_pfp.jpg',
+                numPomodoros: 0,
+                isAdmin: false
+            },
+            {
+                username: 'u5',
+                firstName: 'U5F',
+                lastName: 'U5L',
+                email: 'u5@email.com',
+                avatar: 'assets/default_pfp.jpg',
+                numPomodoros: 0,
+                isAdmin: false
             }
         ]);
     });

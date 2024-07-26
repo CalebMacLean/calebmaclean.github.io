@@ -15,8 +15,12 @@ class Friend {
      * adds a friend request to the friends table
      * 
      * Returns { sender, reciever, requestStatus }
+     * 
+     * Throws BadRequestError without sender or receiver
      */
-    static async request(sender, receiver) {
+    static async request(sender, receiver, requestStatus=false) {
+        if( !sender || !receiver) throw new BadRequestError("Needs a sender or receiver");
+        
         // make request to the database
         const result = await db.query(`
             INSERT INTO friends
@@ -26,7 +30,7 @@ class Friend {
             RETURNING sender,
                       receiver,
                       request_status AS "requestStatus"`,
-            [sender, receiver, false]
+            [sender, receiver, requestStatus]
         );
         
         return result.rows[0];
@@ -109,9 +113,6 @@ class Friend {
             [receiver, status]
         );
 
-        // check that the result was found
-        if( result.rows.length === 0 ) throw new NotFoundError(`No user or requests found`);
-        // else return results
         return result.rows;
     }
 

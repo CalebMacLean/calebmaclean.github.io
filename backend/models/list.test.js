@@ -30,7 +30,7 @@ describe("add class method", function () {
             username: 'u1',
             title: 'new list',
             listType: false,
-            expiredAt: '01/05/2025'
+            expiresAt: '01/05/2025'
         });
 
         expect(result).toEqual({
@@ -39,7 +39,7 @@ describe("add class method", function () {
             username: 'u1',
             listType: false,
             createdAt: expect.any(Date),
-            expiredAt: expect.any(Date)
+            expiresAt: expect.any(Date)
         });
     });
 
@@ -74,7 +74,7 @@ describe("update class method", function () {
             title: 'new',
             listType: false,
             createdAt: expect.any(Date),
-            expiredAt: null
+            expiresAt: null
         });
     });
 
@@ -114,7 +114,7 @@ describe("get class method", function () {
             title: 'To-Do List',
             listType: true,
             createdAt: expect.any(Date),
-            expiredAt: null
+            expiresAt: null
         });
     });
 
@@ -143,14 +143,14 @@ describe("findAll class method", function () {
                 title: 'To-Do List',
                 listType: true,
                 createdAt: expect.any(Date),
-                expiredAt: null
+                expiresAt: null
             },
             {
                 id: 2,
                 title: 'expired list',
                 listType: true,
                 createdAt: expect.any(Date),
-                expiredAt: expect.any(Date),
+                expiresAt: expect.any(Date),
             }
         ]);
     });

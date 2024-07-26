@@ -52,7 +52,7 @@ async function commonBeforeAll() {
     );
     await db.query(`
         INSERT INTO lists
-            (username, title, list_type, expired_at)
+            (username, title, list_type, expires_at)
         VALUES
             ('u2', 'expired list', true, '06/12/2023')
         RETURNING id, title`);

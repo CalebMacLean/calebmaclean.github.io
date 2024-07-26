@@ -4,7 +4,10 @@
 /** Declares all routes for /users */
 // Imports
 const jsonschema = require("jsonschema");
+
 const express = require("express");
+const router = express.Router();
+
 const { ensureAdmin, ensureCorrectUserOrAdmin, ensureLoggedIn } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
@@ -12,7 +15,9 @@ const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
 const userUpdateSchema = require("../schemas/userUpdate.json");
 
-const router = express.Router();
+const friendRoutes = require("./friends");
+
+router.use('/:username/friends', friendRoutes);
 
 // Routes
 /** POST / { user } => { user, token } 
@@ -33,11 +38,11 @@ router.post("/", ensureAdmin, async function (req, res, next) {
         }
 
         // register new user with request payload
-        console.log("Registering user with payload:", req.body);
+        // console.log("Registering user with payload:", req.body);
         const user = await User.register(req.body);
-        console.log("User registered successfully:", user);
+        // console.log("User registered successfully:", user);
         const token = createToken(user);
-        console.log("Token created successfully: ", token);
+        // console.log("Token created successfully: ", token);
 
         // return json of user and token with a status code of 201
         return res.status(201).json({ user, token });
