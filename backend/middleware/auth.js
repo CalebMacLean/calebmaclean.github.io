@@ -81,11 +81,12 @@ function ensureCorrectUserOrAdmin(req, res, next) {
         const user = res.locals.user;
 
         // console.log("ensureCorrectUserOrAdmin res.locals: ", res.locals);
-        // console.log("ensureCorrectUserOrAdmin res.locals.user: ", user);
+        console.log("ensureCorrectUserOrAdmin res.locals.user: ", user);
         // console.log("ensureCorrectUserOrAdmin res.locals.user.username: ", user.username);
-        // console.log("ensureCorrectUserOrAdmin req.params: ", req.params);
+        console.log("ensureCorrectUserOrAdmin req.params: ", req.params);
+        console.log("ensureCorrectUserOrAdmin req.body: ", req.body);
 
-        if (!(user && (user.isAdmin || user.username === req.params.username))) {
+        if (!(user && (user.isAdmin || user.username === req.params.username || user.username === req.body.username))) {
             throw new UnauthorizedError();
         }
         return next();

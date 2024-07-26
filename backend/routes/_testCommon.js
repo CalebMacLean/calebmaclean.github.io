@@ -5,6 +5,7 @@
 const db = require("../db");
 const User = require("../models/user");
 const Friend = require("../models/friend");
+const List = require("../models/list");
 const { createToken } = require("../helpers/tokens");
 
 async function commonBeforeAll() {
@@ -12,6 +13,9 @@ async function commonBeforeAll() {
     await db.query("DELETE FROM users");
     // noinspection sqlWithoutWhere
     await db.query("DELETE FROM friends");
+    // noinspection sqlWithoutWhere
+    await db.query("DELETE FROM lists");
+    await db.query("ALTER SEQUENCE lists_id_seq RESTART WITH 1")
 
     // Insert test users
     await User.register({
@@ -72,6 +76,15 @@ async function commonBeforeAll() {
     // console.log("req5: ", request5);
 
     const request6 = await Friend.request("u5", "u2")
+    // console.log("req6: ", request6);
+
+    // Insert into lists
+    const list1 = await List.add({
+        title: "Example List",
+        username: "u1",
+        listType: true
+    });
+    console.log(list1);
 
 }
 

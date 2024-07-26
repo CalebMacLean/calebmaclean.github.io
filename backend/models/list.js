@@ -181,7 +181,7 @@ class List {
             ORDER BY id`
         );
 
-        console.log('findAll result: ', result.rows[0])
+        // console.log('findAll result: ', result.rows[0])
 
         return result.rows;
     }

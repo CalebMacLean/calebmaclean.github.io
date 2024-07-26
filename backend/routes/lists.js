@@ -13,6 +13,7 @@ const {
 const { BadRequestError } = require("../expressError");
 const List = require("../models/list");
 const listNewSchema = require("../schemas/listNew.json");
+const listUpdateSchema = require("../schemas/listUpdate.json");
 
 const router = express.Router();
 
@@ -44,7 +45,94 @@ router.post("/", ensureCorrectUserOrAdmin, async (req, res, next) => {
     catch (err) {
         return next(err);
     }
-})
+});
+
+/** GET /
+ * Retrieves all lists with an id
+ * 
+ * No data needed
+ * 
+ * Returns { lists: { id, username, title, listType, createdAt, expiresAt }}
+ * 
+ * Authorization: logged in user or admin
+ */
+router.get("/", ensureLoggedIn, async (req, res, next) => {
+    try {
+        const lists = await List.findAll();
+
+        return res.json({ lists });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
+
+/** PATCH /lists/:id
+ * Updates a list with an id
+ * 
+ * Data can include { title, listType, expiresAt }
+ * 
+ * Returns { list: { id, username, title, listType, createdAt, expiresAt }}
+ * 
+ * Authorization: Admin or correct user
+ */
+router.patch("/:id", ensureCorrectUserOrAdmin, async (req, res, next) => {
+    try {
+        // validate that the request follows listUpdateSchema
+        const validator = jsonschema.validate(req.body, listUpdateSchema);
+        if( !validator.valid ) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
+
+        const list = await List.update(req.params.id, req.body);
+
+        return res.json({ list });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
+
+/** GET /lists/:id
+ * Retrieves a list with an id
+ * 
+ * No data needed
+ * 
+ * Returns { list: { id, username, title, listType, createdAt, expiresAt }}
+ * 
+ * Authorization: Admin or correct user
+ */
+router.get("/:id", ensureLoggedIn, async (req, res, next) => {
+    try {
+        const list = await List.get(req.params.id);
+
+        return res.json({ list });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
+
+/** DELETE /lists/:id
+ * Removes a list with an id
+ * 
+ * No data needed
+ * 
+ * Returns { message: `${id} removed`}
+ * 
+ * Authorization: Admin or correct user
+ */
+router.delete("/:id", ensureCorrectUserOrAdmin, async (req, res, next) => {
+    try {
+        const id = await List.remove(req.params.id);
+
+        return res.json({ deleted: req.params.id });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
 
 // Exports
 module.exports = router;
