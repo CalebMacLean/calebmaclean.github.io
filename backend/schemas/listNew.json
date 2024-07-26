@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "maxLength": 25,
+        "minLength": 1
+      },
+      "username": {
+        "type": "string",
+        "maxLength": 25,
+        "minLength": 1
+      },
+      "listType": {
+        "type": "boolean"
+      }
+    },
+    "additionalProperties": false,
+    "required": ["username", "listType"]
+  }

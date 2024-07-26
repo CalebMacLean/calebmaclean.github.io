@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const { NotFoundError } = require("./expressError");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
+const listRoutes = require("./routes/lists");
 const { authenticateJWT } = require("./middleware/auth");
 
 // Application declaration and configurations
@@ -25,6 +26,7 @@ app.use(morgan("tiny"));
 app.use("/auth", authRoutes);
 app.use(authenticateJWT)
 app.use("/users", userRoutes);
+app.use("/lists", listRoutes);
 
 /** Handle 404 errors --- Matches everything */
 app.use(function(req, res, next) {
