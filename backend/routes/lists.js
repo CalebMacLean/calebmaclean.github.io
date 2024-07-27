@@ -14,9 +14,10 @@ const { BadRequestError } = require("../expressError");
 const List = require("../models/list");
 const listNewSchema = require("../schemas/listNew.json");
 const listUpdateSchema = require("../schemas/listUpdate.json");
+const taskRoutes = require("./tasks");
 
 const router = express.Router();
-
+router.use("/:listId/tasks", taskRoutes);
 // Routes
 /**  POST /lists
  * Creates a new list in lists column of database.

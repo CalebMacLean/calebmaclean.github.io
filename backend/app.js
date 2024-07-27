@@ -19,6 +19,7 @@ const app = express();
 app.use(cors());
 // Applies middleware that auto-parses JSON formatted req bodies.
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // tiny is a predefined format that includes minimal req info when logging
 app.use(morgan("tiny"));
 

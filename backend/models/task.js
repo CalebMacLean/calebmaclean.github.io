@@ -65,8 +65,10 @@ class Task {
      * Throws BadRequestError if no data or id is provided.
      */
     static async update(id, data = {}) {
+        console.log("Task.update id: ", id);
+        console.log("Task.update data: ", data);
         // check for id
-        if (!(Number.isInteger(id))) throw new BadRequestError('No id provided');
+        if (!(Number.isInteger(+id))) throw new BadRequestError('No id provided');
         // check for data
         if ((Object.keys(data)).length === 0) throw new BadRequestError('No data');
 
@@ -159,6 +161,7 @@ class Task {
         [listId]
     );
 
+
     // check that the query was successful
     if( query.rows.length === 0 ) throw new NotFoundError(`No list: ${listId}`);
 
@@ -204,7 +207,7 @@ class Task {
    static async removeGroup(ids) {
     // ensure parameter is valid
     if( !Array.isArray(ids) || ids.length === 0 ) throw new BadRequestError('No ids provided');
-
+    
     // make the query
     const query = await db.query(`
         DELETE FROM tasks

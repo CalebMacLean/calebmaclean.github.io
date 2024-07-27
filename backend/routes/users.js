@@ -1,7 +1,7 @@
 // Enable strict mode to avoid common mistakes
 "use strict";
 
-/** Declares all routes for /users */
+/** Declares all routes that interact with users table */
 // Imports
 const jsonschema = require("jsonschema");
 
