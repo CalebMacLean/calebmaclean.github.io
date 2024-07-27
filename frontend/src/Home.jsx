@@ -15,7 +15,7 @@ const Home = ({ username }) => {
     // Render
     return (
         <div className='Home'>
-            <h1>Pomodoro <Clock></Clock></h1>
+            <h1>Pomodoro Clock</h1>
             {username ? 
                 <h2>Welcome, { name }!</h2> : 
                 <h2>Your Focus Starts Now!</h2>
