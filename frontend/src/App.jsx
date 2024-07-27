@@ -1,33 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// Imports
+import React, { useState } from 'react';
+
+import NavBar from './NavBar';
+import RouterList from './RouterList';
 import './App.css'
+import { Router } from 'react-router-dom';
 
+/** App Component
+ * 
+ * This component is responsible for rendering the application.
+ * 
+ * Props: none
+ * 
+ * State:
+ * user: object { username, firstName, lastName, email, avatar, numPomodoros, isAdmin }
+ */
 function App() {
-  const [count, setCount] = useState(0)
-
+  // Root State
+  const [user, setUser] = useState(null);
+  // username var
+  const username = user? user.username : null;
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar username={username} />
+      <RouterList username={username} />
     </>
   )
 }
