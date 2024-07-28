@@ -22,10 +22,13 @@ const NavBar = ({ username }) => {
             <h2>Pomodoro Clock</h2>
             {isLoggedIn ? (
                 <div>
+                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/profile">Profile</NavLink>
                     <NavLink to="/logout">Logout</NavLink>
                 </div>
             ) : (
                 <div>
+                    <NavLink to="/">Home</NavLink>
                     <NavLink to="/login">Login</NavLink>
                     <NavLink to="/signup">Signup</NavLink>
                 </div>

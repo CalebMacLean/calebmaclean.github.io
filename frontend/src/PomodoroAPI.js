@@ -28,7 +28,8 @@ class PomodoroAPI {
 
         // construct parameters for any axios request to the API
         const url = `${BASE_URL}/${endpoint}`;
-        const headers = { Authorization: `Bearer ${PomodoroAPI.token}`};
+        const headers = { Authorization: `Bearer ${this.token}`};
+        console.log("API header: ", headers);
         const params = ( method === 'get' )
             ? data
             : {};
@@ -68,10 +69,9 @@ class PomodoroAPI {
      * This method assumes that a validation token has already been set for the class.
     */
     static async getUser(username) {
-        // check that a token has been set
-        if( !this.token ) throw new Error("Need an authentication token");
         // make request to /users/:username, return response
-        let res = await this.request(`/users/${username}`);
+        let res = await this.request(`users/${username}`);
+        console.log("getUser response: ", res);
         return res.user;
     }
 };
