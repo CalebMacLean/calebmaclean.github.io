@@ -6,6 +6,7 @@ import Home from './Home';
 import NotFound from './NotFound';
 import LogIn from './LogIn';
 import Logout from './Logout';
+import Signup from './Signup';
 
 /** RouteList Component
  * 
@@ -24,6 +25,8 @@ const RouterList = ({ username, login, logout }) => {
             <Route path="/login" element={<LogIn login={ login } />} />
             {/* Log Out Feature */}
             <Route path="/logout" element={<Logout logout={ logout } />} />
+            {/* Sign Up Form */}
+            <Route path="/signup" element={<Signup login={ login } />} />
             {/* Not Found Page */}
             <Route path='*' element={<NotFound />} />
         </Routes>

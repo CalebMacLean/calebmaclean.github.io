@@ -27,6 +27,7 @@ const NavBar = ({ username }) => {
             ) : (
                 <div>
                     <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/signup">Signup</NavLink>
                 </div>
             )}
         </nav>

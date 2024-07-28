@@ -57,6 +57,12 @@ class PomodoroAPI {
         return res.token;
     }
 
+    /** Post a user to /register route */
+    static async registerUser(data) {
+        let res = await this.request(`auth/register`, data, "post");
+        return res.token;
+    }
+
     /** Get a user object with their username 
      * 
      * This method assumes that a validation token has already been set for the class.
