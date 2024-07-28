@@ -1,10 +1,11 @@
 // Imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Router } from 'react-router-dom';
 
 import NavBar from './NavBar';
 import RouterList from './RouterList';
+import PomodoroAPI from './PomodoroAPI';
 import './App.css'
-import { Router } from 'react-router-dom';
 
 /** App Component
  * 
@@ -17,13 +18,19 @@ import { Router } from 'react-router-dom';
  */
 function App() {
   // Root State
-  const [user, setUser] = useState(null);
-  // username var
-  const username = user? user.username : null;
+  const [username, setUsername] = useState(null);
+
+  // Event Handlers
+  const handleLogin = (username, token) => {
+    setUsername(username);
+    localStorage.setItem('token', token);
+  }
+
+  // Render
   return (
     <>
       <NavBar username={username} />
-      <RouterList username={username} />
+      <RouterList username={username} login={handleLogin} />
     </>
   )
 }

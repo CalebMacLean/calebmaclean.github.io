@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Home from './Home';
 import NotFound from './NotFound';
+import LogIn from './LogIn';
 
 /** RouteList Component
  * 
@@ -13,10 +14,14 @@ import NotFound from './NotFound';
  * 
  * State: none
  */
-const RouterList = () => {
+const RouterList = ({ username, login}) => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            {/* Home Page */}
+            <Route path="/" element={<Home username={ username } />} />
+            {/* Log In Form */}
+            <Route path="/login" element={<LogIn login={ login } />} />
+            {/* Not Found Page */}
             <Route path='*' element={<NotFound />} />
         </Routes>
     )
