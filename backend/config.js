@@ -9,6 +9,7 @@ require("dotenv").config();
 
 // Access SECRET_KEY for export
 const SECRET_KEY = process.env.SECRET_KEY || "shadow-dev";
+const PORT = +process.env.PORT || 3001;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_HOST = process.env.DB_HOST;
@@ -57,5 +58,6 @@ const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 module.exports = {
     SECRET_KEY,
     BCRYPT_WORK_FACTOR,
-    getDatabaseUri
+    getDatabaseUri,
+    PORT
 }
