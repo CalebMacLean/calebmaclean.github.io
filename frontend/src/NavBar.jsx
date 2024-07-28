@@ -26,7 +26,7 @@ const NavBar = ({ username }) => {
                 </div>
             ) : (
                 <div>
-                    <span>Login</span>
+                    <NavLink to="/login">Login</NavLink>
                     <span>Signup</span>
                 </div>
             )}

@@ -20,10 +20,18 @@ function App() {
   const [user, setUser] = useState(null);
   // username var
   const username = user? user.username : null;
+
+  // Event Handlers
+  const handleLogin = (user, token) => {
+    setUser(user);
+    localStorage.setItem('token', token);
+  }
+
+  // Render
   return (
     <>
       <NavBar username={username} />
-      <RouterList username={username} />
+      <RouterList username={username} login={handleLogin} />
     </>
   )
 }
