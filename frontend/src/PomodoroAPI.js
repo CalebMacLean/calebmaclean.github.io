@@ -51,7 +51,7 @@ class PomodoroAPI {
 
     // Individual API routes
     /** Post a user to /token to retrieve a token */
-    static async loginUser(data) {
+    static async login(data) {
         let res = await this.request(`auth/token`, data, "post");
         this.token = res.token;
         return res.token;

@@ -31,14 +31,14 @@ const LogIn = ({ login }) => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault;
+        // Prevent default form behavior
+        e.preventDefault();
         try {
             // send login request
             const token = await PomodoroAPI.login(formData);
-            // make a request to get the user
-            const user = await PomodoroAPI.getUser(formData.username);
+            const { username } = formData;
             // call login function
-            login(user, token);
+            login(username, token);
             // reset form
             setFormData({ username: '', password: '' });
             // navigate to home page
@@ -56,7 +56,7 @@ const LogIn = ({ login }) => {
         <div className="LogIn">
             <h1 className="LogIn-title">Log In</h1>
 
-            <form className="LogIn Form" >
+            <form className="LogIn Form" onSubmit={handleSubmit}>
                 {/* Username Input */}
                 <div className = "form-group">
                     <label htmlFor="username">Username</label>
@@ -65,6 +65,7 @@ const LogIn = ({ login }) => {
                         id="username"
                         name="username"
                         value={formData.username}
+                        onChange={handleChange}
                     />
                 </div>
                 {/* Password Input */}
@@ -75,6 +76,7 @@ const LogIn = ({ login }) => {
                         id="password"
                         name="password"
                         value={formData.password}
+                        onChange={handleChange}
                     />
                 </div>
                 {/* Submission Button */}
