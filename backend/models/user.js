@@ -114,9 +114,9 @@ class User {
      * 
      * Returns [{ username, firstName, lastName, email, avatar, numPomodoros, isAdmin }, ...]
      */
-    static async findAll() {
+    static async findAll(searchFilter = {}) {
         // SELECT all users in users table
-        const result = await db.query(`
+        let query = `
             SELECT username,
                    first_name AS "firstName",
                    last_name AS "lastName",
@@ -124,9 +124,22 @@ class User {
                    avatar,
                    num_pomodoros AS "numPomodoros",
                    is_admin AS "isAdmin"
-            FROM users
-            ORDER BY username`
-        );
+            FROM users`;
+        let whereExpressions = [];
+        let queryValues = [];
+
+        const { nameLike } = searchFilter;
+        if( nameLike ) {
+            queryValues.push(`%${nameLike}%`);
+            whereExpressions.push(`name ILIKE $${queryValues.length}`);
+        }
+
+        if( whereExpressions.length > 0 ) {
+            query += " WHERE " + whereExpressions.join(" AND ");
+        }
+
+        query += " ORDER BY username";
+        const result = await db.query(query, queryValues);
 
         return result.rows;
     }

@@ -14,6 +14,7 @@ const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
 const userUpdateSchema = require("../schemas/userUpdate.json");
+const userSearchSchema = require("../schemas/userSearch.json");
 
 const friendRoutes = require("./friends");
 
@@ -58,10 +59,17 @@ router.post("/", ensureAdmin, async function (req, res, next) {
  * 
  * Authorization: admin
 */
-router.get("/", ensureAdmin, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
+    const q = req.query;
     try {
+        const validator = jsonschema.validate(q, userSearchSchema);
+        if( !validator.valid ) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
+
         // Get users from database with User.findAll
-        const users = await User.findAll();
+        const users = await User.findAll(q);
         return res.json({ users });
     }
     catch (err) {
@@ -76,7 +84,7 @@ router.get("/", ensureAdmin, async function (req, res, next) {
  * Authorization required: admin or same user-as-:username
  **/
 
-router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.get("/:username", async function (req, res, next) {
     try {
         // Get user from database with route variable username
         const user = await User.get(req.params.username);

@@ -74,6 +74,18 @@ class PomodoroAPI {
         console.log("getUser response: ", res);
         return res.user;
     }
+
+    /** Get all users */
+    static async getUsers() {
+        let res = await this.request('users');
+        return res.users;
+    }
+
+    /** Get companies based on search term */
+    static async findUsers(searchTerm) {
+        let res = await this.request(`users/?nameLike=${searchTerm}`);
+        return res.companies;
+    }
 };
 
 // Exports
