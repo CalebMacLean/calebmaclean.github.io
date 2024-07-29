@@ -25,6 +25,7 @@ const NavBar = ({ username }) => {
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/profile">Profile</NavLink>
                     <NavLink to="/users">Users</NavLink>
+                    <NavLink to="/lists">Lists</NavLink>
                     <NavLink to="/logout">Logout</NavLink>
                 </div>
             ) : (

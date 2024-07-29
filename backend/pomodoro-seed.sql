@@ -33,5 +33,5 @@ INSERT INTO lists (username)
 VALUES ('testadmin');
 
 -- inserts test task for testuser
-INSERT INTO tasks (title, list_id, expected_pomodoros)
-VALUES ('Test Task', 1, 0);
+INSERT INTO tasks (title, list_id)
+VALUES ('Test Task', 1);

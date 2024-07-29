@@ -32,11 +32,27 @@ import PomodoroAPI from './PomodoroAPI';
         <div className="UserDetail">
             {user ? (
                 <div>
-                    <img src={"/src/assets/default_pfp.jpg"} alt={user.username} />
-                    <h3>{user.username}</h3>
-                    <p>{user.first_name} {user.last_name}</p>
-                    <p>{user.email}</p>
-                    <p>{user.num_pomodoros || 0} Pomodoros Completed</p>
+                    <div>
+                        <img src={"/src/assets/default_pfp.jpg"} alt={user.username} />
+                        <h3>{user.username}</h3>
+                        <p>{user.first_name} {user.last_name}</p>
+                        <p>{user.email}</p>
+                        <p>{user.num_pomodoros || 0} Pomodoros Completed</p>
+                    </div>
+                    <div>
+                        {user.lists.length > 0 ? (
+                            <>
+                            <h3>Lists</h3>
+                            <div>
+                                {user.lists.map(list => (
+                                    <p key={list.id}>{list.title}</p>
+                                ))}
+                            </div>
+                            </>
+                        ) : (
+                            <p>No Lists</p>
+                        )}
+                    </div>
                 </div>
             ) : (
                 <p>Loading...</p>

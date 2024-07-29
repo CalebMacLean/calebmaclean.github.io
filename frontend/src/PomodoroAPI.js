@@ -81,10 +81,29 @@ class PomodoroAPI {
         return res.users;
     }
 
-    /** Get companies based on search term */
+    /** Get users based on search term */
     static async findUsers(searchTerm) {
         let res = await this.request(`users/?nameLike=${searchTerm}`);
-        return res.companies;
+        return res.users;
+    }
+
+    /** Get all lists */
+    static async getLists() {
+        let res = await this.request('lists');
+        // console.log("Lists res: ", lists);
+        return res.lists;
+    }
+
+    /** Get lists based on search term */
+    static async findLists(searchTerm) {
+        let res = await this.request(`lists/?nameLike=${searchTerm}`);
+        return res.lists;
+    }
+
+    /** Get a list by id */
+    static async getList(id) {
+        let res = await this.request(`lists/${id}`);
+        return res.list;
     }
 };
 

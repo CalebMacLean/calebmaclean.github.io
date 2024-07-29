@@ -10,6 +10,8 @@ import Signup from './Signup';
 import Profile from './Profile';
 import UserList from './UserList';
 import UserDetail from './UserDetail';
+import Lists from './Lists';
+import ListDetail from './ListDetail';
 
 /** RouteList Component
  * 
@@ -36,6 +38,10 @@ const RouterList = ({ username, login, logout }) => {
             <Route path="/users" element={<UserList />} />
             {/* User Page */}
             <Route path="/users/:username" element={<UserDetail />} />
+            {/* Lists Page */}
+            <Route path="/lists" element={<Lists />} />
+            {/* List Page */}
+            <Route path="/lists/:id" element={<ListDetail />} />
             {/* Not Found Page */}
             <Route path='*' element={<NotFound />} />
         </Routes>

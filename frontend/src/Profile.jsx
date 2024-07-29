@@ -123,6 +123,20 @@ const Profile = ({ username }) => {
 
                         <button>Save Changes</button>
                     </form>
+                    <div>
+                        {user.lists.length > 0 ? (
+                            <>
+                            <h3>Lists</h3>
+                            <ul>
+                                {user.lists.map(list => (
+                                    <li key={list.id}>{list.title}</li>
+                                ))}
+                            </ul>
+                            </>
+                        ) : (
+                            <p>No Lists</p>
+                        )}
+                    </div>
                 </>
             ) : (
                 <>

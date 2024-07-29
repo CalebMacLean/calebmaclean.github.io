@@ -131,7 +131,7 @@ class User {
         const { nameLike } = searchFilter;
         if( nameLike ) {
             queryValues.push(`%${nameLike}%`);
-            whereExpressions.push(`name ILIKE $${queryValues.length}`);
+            whereExpressions.push(`username ILIKE $${queryValues.length}`);
         }
 
         if( whereExpressions.length > 0 ) {
@@ -171,6 +171,15 @@ class User {
 
         // if no user throw error
         if( !user ) throw new NotFoundError(`No user: ${username}`);
+
+        const userLists = await db.query(`
+            SELECT id,
+                title,
+                list_type AS "listType"
+            FROM lists
+            WHERE username = $1`,
+        [user.username]);
+        user.lists = userLists.rows;
 
         // else return user
         return user;

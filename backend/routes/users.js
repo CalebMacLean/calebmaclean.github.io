@@ -84,7 +84,7 @@ router.get("/", async function (req, res, next) {
  * Authorization required: admin or same user-as-:username
  **/
 
-router.get("/:username", async function (req, res, next) {
+router.get("/:username", ensureLoggedIn, async function (req, res, next) {
     try {
         // Get user from database with route variable username
         const user = await User.get(req.params.username);

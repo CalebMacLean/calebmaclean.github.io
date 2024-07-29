@@ -14,6 +14,7 @@ const { BadRequestError } = require("../expressError");
 const List = require("../models/list");
 const listNewSchema = require("../schemas/listNew.json");
 const listUpdateSchema = require("../schemas/listUpdate.json");
+const listSearchSchema = require("../schemas/listSearch.json");
 const taskRoutes = require("./tasks");
 
 const router = express.Router();
@@ -57,10 +58,16 @@ router.post("/", ensureCorrectUserOrAdmin, async (req, res, next) => {
  * 
  * Authorization: logged in user or admin
  */
-router.get("/", ensureLoggedIn, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
+    const q = req.query;
     try {
-        const lists = await List.findAll();
+        const validator = jsonschema.validate(q, listSearchSchema);
+        if( !validator.valid ) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
 
+        const lists = await List.findAll();
         return res.json({ lists });
     }
     catch (err) {

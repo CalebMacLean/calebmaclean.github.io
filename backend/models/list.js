@@ -158,6 +158,17 @@ class List {
         // throw error if there is no list
         if( !list ) throw new NotFoundError(`No list at: ${id}`);
 
+        const tasks = await db.query(`
+            SELECT id,
+                title,
+                expected_pomodoros AS "expectedPomodoros",
+                completed_cycles AS "completedCycles",
+                completed_status AS "completedStatus"
+            FROM tasks
+            WHERE list_id = $1`,
+        [list.id]);
+
+        list.tasks = tasks.rows;
         // else return list
         return list;
     }
@@ -169,19 +180,31 @@ class List {
      * 
      * Returns: [{id, title, listType, createdAt, expiresAt}, ...]
      */
-    static async findAll() {
-        // make request to database for all list
-        const result = await db.query(`
+    static async findAll(searchFilter = {}) {
+        let query = `
             SELECT id,
                    title,
                    list_type AS "listType",
                    created_at AS "createdAt",
                    expires_at AS "expiresAt"
-            FROM lists
-            ORDER BY id`
-        );
+            FROM lists`;
+        let whereExpressions = [];
+        let queryValues = [];
 
-        // console.log('findAll result: ', result.rows[0])
+        const { nameLike } = searchFilter;
+        if( nameLike ) {
+            queryValues.push(`%${nameLike}%`);
+            whereExpressions.push(`title ILIKE $${queryValues.length}`);
+        }
+
+        if( whereExpressions.length > 0) {
+            query += " WHERE " + whereExpressions.join(" AND ");
+        }
+
+        query += " ORDER BY title";
+        console.log("query: ", query);
+        console.log("queryValues: ", queryValues);
+        const result = await db.query(query, queryValues);
 
         return result.rows;
     }
