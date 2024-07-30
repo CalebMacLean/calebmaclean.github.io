@@ -107,6 +107,38 @@ class Task {
         return task;
     }
 
+    /** incrementCycles class method
+     * Will increase the completed_cycles by one.
+     * 
+     * Parameters:
+     * - id: int
+     * 
+     * Returns: obj - {id, title, listId, expectedPomodoros, completedCycles, completedStatus}
+     * 
+     * Throws not found error if no task is found.
+     */
+    static async incrementCycles(id) {
+        // make an update query that uses set to increase the cycles by 1
+        const result = await db.query(`
+            UPDATE tasks
+            SET completed_cycles = completed_cycles + 1
+            WHERE id = $1
+            RETURNING id,
+                    title,
+                    list_id AS "listId",
+                    expected_pomodoros AS "expectedPomodoros",
+                    completed_cycles AS "completedCycles",
+                    completed_status AS "completedStatus"`,
+            [id]);
+
+        const updatedTask = result.rows[0];
+
+        // throw error if no user found
+        if (!updatedTask) throw new NotFoundError(`No task: ${id}`);
+
+        return updatedTask;
+    }
+
     /** get class method
      * Retrieves a task from the database with an id
      * 
@@ -132,7 +164,7 @@ class Task {
         );
 
         // throw errof if no task found
-        if( !result.rows[0] ) throw new NotFoundError(`No id: ${id}`);
+        if (!result.rows[0]) throw new NotFoundError(`No id: ${id}`);
         // else return task
         return result.rows[0];
     }
@@ -147,9 +179,9 @@ class Task {
      * 
      * Throws NotFoundError with invalid listId
     */
-   static async getTasksByList(listId) {
-    // make query
-    const query = await db.query(`
+    static async getTasksByList(listId) {
+        // make query
+        const query = await db.query(`
         SELECT id,
                 title,
                 list_id AS "listId",
@@ -158,67 +190,67 @@ class Task {
                 completed_status AS "completedStatus"
             FROM tasks
             WHERE list_id = $1`,
-        [listId]
-    );
+            [listId]
+        );
 
 
-    // check that the query was successful
-    if( query.rows.length === 0 ) throw new NotFoundError(`No list: ${listId}`);
+        // check that the query was successful
+        if (query.rows.length === 0) throw new NotFoundError(`No list: ${listId}`);
 
-    return query.rows;
-   }
+        return query.rows;
+    }
 
-   /** remove class method
-    * Deletes a row from the tasks table.
-    * 
-    * Parameters:
-    * - id: (int) valid task id
-    * 
-    * Returns: undefined
-    * 
-    * Throws NotFoundError with invalid id
-    */
-   static async remove(id) {
-    // make query store result
-    const query = await db.query(`
+    /** remove class method
+     * Deletes a row from the tasks table.
+     * 
+     * Parameters:
+     * - id: (int) valid task id
+     * 
+     * Returns: undefined
+     * 
+     * Throws NotFoundError with invalid id
+     */
+    static async remove(id) {
+        // make query store result
+        const query = await db.query(`
         DELETE
         FROM tasks
         WHERE id = $1
         RETURNING id`,
-        [id]
-    )
-    
-    // check that query was successful
-    if( !(query.rows[0]) ) throw new NotFoundError(`No id: ${id}`);
-   }
+            [id]
+        )
 
-   /** removeGroup class method
-    * Deletes a group of rows from the tasks table
-    * 
-    * Parameters:
-    * ids: (arr) array of valid task ids
-    * 
-    * Returns: undefined
-    * 
-    * Throws BadRequestError with an empty array or a parameter thats not an array
-    * 
-    * Throws a NotFoundError if query isn't succesful
-    */
-   static async removeGroup(ids) {
-    // ensure parameter is valid
-    if( !Array.isArray(ids) || ids.length === 0 ) throw new BadRequestError('No ids provided');
-    
-    // make the query
-    const query = await db.query(`
+        // check that query was successful
+        if (!(query.rows[0])) throw new NotFoundError(`No id: ${id}`);
+    }
+
+    /** removeGroup class method
+     * Deletes a group of rows from the tasks table
+     * 
+     * Parameters:
+     * ids: (arr) array of valid task ids
+     * 
+     * Returns: undefined
+     * 
+     * Throws BadRequestError with an empty array or a parameter thats not an array
+     * 
+     * Throws a NotFoundError if query isn't succesful
+     */
+    static async removeGroup(ids) {
+        // ensure parameter is valid
+        if (!Array.isArray(ids) || ids.length === 0) throw new BadRequestError('No ids provided');
+
+        // make the query
+        const query = await db.query(`
         DELETE FROM tasks
         WHERE id = ANY($1::int[])
         RETURNING id`,
-        [ids]
-    );
+            [ids]
+        );
 
-    // check that query was successful
-    if( query.rows.length === 0 ) throw new NotFoundError('No tasks found for provided ids');
-   }
+        // check that query was successful
+        if (query.rows.length === 0) throw new NotFoundError('No tasks found for provided ids');
+    }
 };
 
 // Exports

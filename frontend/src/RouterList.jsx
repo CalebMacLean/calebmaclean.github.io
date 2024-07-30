@@ -21,11 +21,16 @@ import ListDetail from './ListDetail';
  * 
  * State: none
  */
-const RouterList = ({ username, login, logout }) => {
+const RouterList = ({ username, login, logout, activeList, setActiveList, activeTask, setActiveTask }) => {
     return (
         <Routes>
             {/* Home Page */}
-            <Route path="/" element={<Home username={ username } />} />
+            <Route path="/" element={
+                <Home username={ username } 
+                    activeList={activeList} 
+                    activeTask={activeTask} 
+                    setActiveTask={setActiveTask} />} 
+            />
             {/* Log In Form */}
             <Route path="/login" element={<LogIn login={ login } />} />
             {/* Log Out Feature */}

@@ -87,6 +87,11 @@ class PomodoroAPI {
         return res.users;
     }
 
+    /** Update a users pomodoros */
+    static async incrementPomodoros(username, data={}) {
+        let res = await this.request(`users/${username}/increment`, data, "patch")
+    }
+
     /** Get all lists */
     static async getLists() {
         let res = await this.request('lists');
@@ -104,6 +109,11 @@ class PomodoroAPI {
     static async getList(id) {
         let res = await this.request(`lists/${id}`);
         return res.list;
+    }
+
+    /** Update a task's completed cycles */
+    static async incrementTask(listId, id) {
+        let res = await this.request(`lists/${listId}/tasks/${id}`)
     }
 };
 

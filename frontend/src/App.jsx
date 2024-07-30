@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import NavBar from './NavBar';
 import RouterList from './RouterList';
+import PomodoroAPI from './PomodoroAPI';
 import './App.css'
 
 /** App Component
@@ -17,6 +18,8 @@ import './App.css'
 function App() {
   // Root State
   const [username, setUsername] = useState(null);
+  const [activeList, setActiveList] = useState(null);
+  const [activeTask, setActiveTask] = useState(null);
 
   // Event Handlers
   const handleLogin = (username, token) => {
@@ -33,7 +36,15 @@ function App() {
   return (
     <>
       <NavBar username={username} />
-      <RouterList username={username} login={handleLogin} logout={handleLogout} />
+      <RouterList 
+        username={username} 
+        login={handleLogin} 
+        logout={handleLogout}
+        setActiveList={setActiveList}
+        setActiveTask={setActiveTask}
+        activeList={activeList}
+        activeTask={activeTask}
+      />
     </>
   )
 }

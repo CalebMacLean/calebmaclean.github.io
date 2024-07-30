@@ -107,6 +107,31 @@ router.patch("/:id", ensureLoggedIn, async (req, res, next) => {
     }
 });
 
+/** PATCH lists/:listId/tasks/:id/increment
+ * Update a task's completedCycles
+ * 
+ * Returns {task: {id, title, listId, expectedPomodoros, completedCycles, completedStatus}}
+ * 
+ * Authorization: correct user or admin
+ */
+router.patch("/:id/increment", ensureLoggedIn, async (req, res, next) => {
+    try {
+        // validate request with taskUpdateSchema
+        const validator = jsonschema.validate(req.body, taskUpdateSchema);
+        if( !validator.valid ) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
+
+        const task = await Task.incrementCycles(req.params.id);
+
+        return res.json({ task });
+    }
+    catch (err) {
+        return next(err);
+    }
+});
+
 /** DELETE /lists/:listId/tasks/:id
  * Removes a task or tasks from the database
  * 
