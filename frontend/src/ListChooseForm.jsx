@@ -1,5 +1,5 @@
 // Imports
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PomodoroAPI from './PomodoroAPI';
 
@@ -15,10 +15,8 @@ import PomodoroAPI from './PomodoroAPI';
  * - formData: object like { name }
  */
 const ListChooseForm = ({ lists, setActiveList, setShowChooseList }) => {
-    console.log("ListChooseForm lists: ", lists);
     // State
     const [formData, setFormData] = useState({});
-
     // Event Handlers
     const handleChange = (e) => {
         // extract the list id from select element
@@ -29,12 +27,10 @@ const ListChooseForm = ({ lists, setActiveList, setShowChooseList }) => {
     const handleSubmit = (e) => {
         // prevent refresh
         e.preventDefault();
-        console.log("Handle Submit listId: ", formData.listId);
         // find the selected list
-        const list = lists.find(list => list.id === formData.listId);
+        const list = lists.find(list => +list.id === +formData.listId);
         // set activeList
-        if( list ) setActiveList( list );
-        console.log("Handle Submit list: ", list);
+        if (list) setActiveList(list);
         // reset formData
         setFormData({});
         setShowChooseList(false);
@@ -45,9 +41,9 @@ const ListChooseForm = ({ lists, setActiveList, setShowChooseList }) => {
         <form className="ListChooseForm" onSubmit={handleSubmit}>
             {/* Choose List Field */}
             <label htmlFor="list-select">Choose a list: </label>
-            <select 
-                name="list-select" 
-                id="list-select" 
+            <select
+                name="list-select"
+                id="list-select"
                 onChange={handleChange}
             >
                 {/* Default Option */}

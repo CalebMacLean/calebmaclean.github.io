@@ -28,7 +28,10 @@ const ListWrapper = ({ username, activeList, setActiveList }) => {
             { !activeList ? (
                 <ListFormWrapper username={username} setActiveList={setActiveList} />
             ) : (
+                <>
+                <button onClick={(() => setActiveList(null))}>Back</button>
                 <ListActive activeList={activeList} />
+                </>
             )}
         </div>
     )

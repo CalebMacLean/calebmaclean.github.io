@@ -11,7 +11,7 @@ const BASE_URL = import.meta.VITE_BASE_URL || "http://localhost:3001";
  */
 class PomodoroAPI {
     // the token for interactions with the API will be stored here
-    static token = getLocalStorage("token") ? getLocalStorage("token") : null;
+    static token = localStorage.getItem("token") ? localStorage.getItem("token") : null;
 
     /** request class method
      * 
