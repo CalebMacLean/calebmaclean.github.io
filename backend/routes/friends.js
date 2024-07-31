@@ -7,14 +7,14 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 const Friend = require("../models/friend");
 const { logParams } = require("../middleware/debug");
-const { 
-    ensureAdmin, 
-    ensureCorrectUserOrAdmin, 
+const {
+    ensureAdmin,
+    ensureCorrectUserOrAdmin,
     ensureLoggedIn } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const friendNewSchema = require("../schemas/friendNew.json");
 
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
 // router.use(logParams);
 
 // Routes
@@ -30,10 +30,10 @@ const router = express.Router({mergeParams: true});
 */
 
 router.post("/request/:receiver", ensureCorrectUserOrAdmin, async function (req, res, next) {
-    try{
+    try {
         // validate that request follows friendNewSchema
         const validator = jsonschema.validate(req.body, friendNewSchema);
-        if( !validator.valid ) {
+        if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
@@ -41,11 +41,21 @@ router.post("/request/:receiver", ensureCorrectUserOrAdmin, async function (req,
         // make new request with Friend.request
         // console.log("Friend Request Body: ", req.body);
         // console.log("Friend Request Params: ", req.params);
-        const friendRequest = await Friend.request(req.params.username, req.params.receiver);
-        // console.log("Successfully made Friend Request: ", friendRequest);
-
-        // return json of friendRequest with a status code of 201
-        return res.status(201).json({ friendRequest });
+        let friendStatus;
+        try {
+            friendStatus = await Friend.get(req.params.receiver, req.params.username);
+            if(friendStatus) throw new BadRequestError("Error: Already friends");
+        }
+        catch (error) {
+            friendStatus = undefined;
+        }
+        if(!friendStatus) {
+            const friendRequest = await Friend.request(req.params.username, req.params.receiver);
+            // console.log("Successfully made Friend Request: ", friendRequest);
+    
+            // return json of friendRequest with a status code of 201
+            return res.status(201).json({ friendRequest });
+        }
     }
     catch (err) {
         return next(err);
@@ -61,7 +71,7 @@ router.post("/request/:receiver", ensureCorrectUserOrAdmin, async function (req,
  * 
  * Authorization: admin or correct user
  */
-router.get("/request/:receiver", ensureCorrectUserOrAdmin, async (req, res, next) => {
+router.get("/request/:receiver", ensureLoggedIn, async (req, res, next) => {
     try {
         const friendRequest = await Friend.get(req.params.username, req.params.receiver);
         return res.json({ friendRequest });
@@ -80,7 +90,7 @@ router.get("/request/:receiver", ensureCorrectUserOrAdmin, async (req, res, next
  * 
  * Authorization: admin or correct user
  */
-router.get("/sent", ensureCorrectUserOrAdmin,async (req, res, next) => {
+router.get("/sent", ensureCorrectUserOrAdmin, async (req, res, next) => {
     try {
         const username = req.params.username;
         // console.log("username: ", username);
@@ -102,7 +112,7 @@ router.get("/sent", ensureCorrectUserOrAdmin,async (req, res, next) => {
  * 
  * Authorization: admin or correct user
  */
-router.get("/received", ensureCorrectUserOrAdmin,async (req, res, next) => {
+router.get("/received", ensureCorrectUserOrAdmin, async (req, res, next) => {
     try {
         const username = req.params.username;
         // console.log("username: ", username);
@@ -147,7 +157,7 @@ router.get("/", ensureLoggedIn, async (req, res, next) => {
  * Authorization: Admin or correct user
  */
 router.patch("/request/:sender", ensureCorrectUserOrAdmin, async (req, res, next) => {
-    try{
+    try {
         const friendRequest = await Friend.acceptRequest(req.params.sender, req.params.username);
 
         return res.json({ friendRequest });
@@ -167,9 +177,9 @@ router.patch("/request/:sender", ensureCorrectUserOrAdmin, async (req, res, next
  * Authorization: Admin or correct user
  */
 router.delete("/request/:sender", ensureCorrectUserOrAdmin, async (req, res, next) => {
-    try{
+    try {
         const friendRequest = await Friend.remove(req.params.sender, req.params.username);
-        
+
         return res.json({ friendRequest });
     }
     catch (err) {

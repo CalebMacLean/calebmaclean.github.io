@@ -15,7 +15,7 @@ import { AuthContext } from './AuthContext';
  * State:
  * - formData: (obj) user profile data.
  */
-const Profile = ({}) => {
+const Profile = ({ }) => {
     // Navigation
     const navigate = useNavigate();
     const { username } = useContext(AuthContext);
@@ -34,6 +34,9 @@ const Profile = ({}) => {
     }
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [user, setUser] = useState(null);
+    const [friends, setFriends] = useState([])
+    const [friendRequests, setFriendRequests] = useState([])
+    const [updatedFriends, setUpdatedFriends] = useState(false)
 
     // Event Handlers
     const handleChange = (evt) => {
@@ -55,15 +58,40 @@ const Profile = ({}) => {
         }
     };
 
+    const handleApprove = async (username, sender) => {
+        setUpdatedFriends(false)
+        try {
+            let approveRequest = await PomodoroAPI.approveRequest(username, sender)
+            setUpdatedFriends(true)
+        } catch (errors) {
+            console.error("Request Approval Error: ", errors);
+
+        }
+    }
+    const handleDeny = async (username, sender) => {
+        setUpdatedFriends(false)
+        try {
+            let denyRequest = await PomodoroAPI.denyRequest(username, sender)
+            setUpdatedFriends(true)
+        } catch (errors) {
+            console.error("Request Approval Error: ", errors);
+
+        }
+    }
+
     // Effects
     useEffect(() => {
         async function getUser() {
-            if(!username) return;
+            if (!username) return;
             const userRes = await PomodoroAPI.getUser(username);
+            const friendsRes = await PomodoroAPI.getFriends(username)
+            const requestsRes = await PomodoroAPI.getFriendRequests(username)
             setUser(userRes);
+            setFriends(friendsRes)
+            setFriendRequests(requestsRes)
         }
         getUser();
-    }, [username]);
+    }, [username, updatedFriends]);
 
     // Render
     return (
@@ -129,16 +157,49 @@ const Profile = ({}) => {
                     <div>
                         {user.lists.length > 0 ? (
                             <>
-                            <h3>Lists</h3>
-                            <ul>
-                                {user.lists.map(list => (
-                                    <li key={list.id}>{list.title}</li>
-                                ))}
-                            </ul>
+                                <h3>Lists</h3>
+                                <ul>
+                                    {user.lists.map(list => (
+                                        <li key={list.id}>{list.title}</li>
+                                    ))}
+                                </ul>
                             </>
                         ) : (
                             <p>No Lists</p>
                         )}
+                    </div>
+                    <div>
+                        {friends.length > 0 ? (
+                            <>
+                                <h1>Friends</h1>
+                                <ul>
+                                    {friends.map(friend => (
+                                        <li key={friend.username}>{friend.username}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) :
+                            <p>No Friends</p>
+                        }
+                    </div>
+                    <div>
+                        {friendRequests.length > 0 ? (
+                            <>
+                                <h1>Friend Requests</h1>
+                                <div>
+                                    {friendRequests.map(request => (
+                                        <div key={request.username}>
+                                            <p key={request.username}>{request.username}</p>
+                                            <button onClick={() => handleApprove(username, request.username)}>Approve</button>
+                                            <button  onClick={() => handleDeny(username, request.username)}>Reject</button>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </>
+                        ) :
+                            <p>No Friend Requests</p>
+                        }
                     </div>
                 </>
             ) : (

@@ -145,7 +145,7 @@ router.delete("/remove", ensureLoggedIn, async (req, res, next) => {
     try {
 
         const ids = await Task.removeGroup(req.body.ids);
-
+        // console.log("ids: ", ids);
         return res.json({ deleted: req.body.ids })
     }
     catch (err) {

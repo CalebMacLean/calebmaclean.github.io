@@ -140,6 +140,68 @@ class PomodoroAPI {
         let res = await this.request(`lists/${listId}/tasks`);
         return res.tasks;
     }
+
+    /** Remove completed tasks  */
+    static async removeCompletedTasks(listId, ids) {
+        let res = await this.request(`lists/${listId}/tasks/remove`, {ids: ids}, 'delete');
+    }
+
+    /** Create a task */
+    static async createTask(data) {
+        let res = await this.request(`lists/${data.listId}/tasks`, data, 'post');
+        return res.task;
+    }
+
+    /** Update a task */
+    static async updateTask(taskId, data) {
+        let res = this.request(``)
+    }
+
+    /** Get all friends for a user */
+    static async getFriends(username) {
+        let res = await this.request(`users/${username}/friends`);
+        return res.friends;
+    }
+
+    /** Get all friends requests for a user */
+    static async getFriendRequests(username) {
+        let res = await this.request(`users/${username}/friends/received`);
+        return res.friendRequests;
+    }
+
+    /** Approve a friend request */
+    static async approveRequest(username, sender) {
+        let res = await this.request(`users/${username}/friends/request/${sender}`, {}, "patch")
+    }
+
+    /** Deny a friend request */
+    static async denyRequest(username, sender) {
+        let res = await this.request(`users/${username}/friends/request/${sender}`, {}, "delete")
+    }
+
+    /** Create new friend request  */
+    static async requestFriend(username, receiver) {
+        let res = await this.request(`users/${username}/friends/request/${receiver}`, {}, "post")
+    }
+
+    /** Get a single friend or request */
+    static async getFriend(username, receiver) {
+        let res;
+        let res2;
+        try {
+            res = await this.request(`users/${username}/friends/request/${receiver}`);
+            return res.friendRequest;
+        } catch (error) {
+            if(!res){
+                try {
+                    res2 = await this.request(`users/${receiver}/friends/request/${username}`);
+                    return res2.friendRequest
+                } catch (error) { 
+                    return undefined;
+                }
+            }
+         }
+    }
 };
 
 // Exports

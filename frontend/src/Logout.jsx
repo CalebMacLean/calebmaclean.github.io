@@ -14,7 +14,7 @@ import { AuthContext } from './AuthContext';
  * State: none
  */
 const Logout = () => {
-    const {logout } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
     // Navigation
     const navigate = useNavigate();
 

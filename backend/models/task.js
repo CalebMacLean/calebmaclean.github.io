@@ -195,8 +195,8 @@ class Task {
 
 
         // check that the query was successful
-        if (query.rows.length === 0) throw new NotFoundError(`No list: ${listId}`);
-        console.log("model query: ", query.rows);
+        // if (query.rows.length === 0) throw new NotFoundError(`No list: ${listId}`);
+        // console.log("model query: ", query.rows);
         return query.rows;
     }
 
