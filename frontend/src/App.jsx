@@ -17,29 +17,14 @@ import './App.css'
  */
 function App() {
   // Root State
-  const [username, setUsername] = useState(null);
   const [activeList, setActiveList] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
-
-  // Event Handlers
-  const handleLogin = (username, token) => {
-    setUsername(username);
-    localStorage.setItem('token', token);
-  }
-
-  const handleLogout = () => {
-    setUsername(null);
-    localStorage.removeItem('token');
-  }
 
   // Render
   return (
     <>
-      <NavBar username={username} />
+      <NavBar />
       <RouterList 
-        username={username} 
-        login={handleLogin} 
-        logout={handleLogout}
         setActiveList={setActiveList}
         setActiveTask={setActiveTask}
         activeList={activeList}

@@ -1,9 +1,9 @@
 // Imports
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
-
+import { AuthContext } from './AuthContext';
 /** Signup Component
  * 
  * This component is responsible for rendering the signup form.
@@ -14,7 +14,8 @@ import PomodoroAPI from './PomodoroAPI';
  * State:
  * - formData: object { username, password, firstName, lastName, email, avatar }
  */
-const Signup = ({ login }) => {
+const Signup = () => {
+    const { login } = useContext(AuthContext);
     // State
     const INITIAL_STATE = {
         username: '',

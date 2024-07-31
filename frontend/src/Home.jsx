@@ -1,8 +1,9 @@
 // Imports
-import React from 'react';
+import React, {useContext} from 'react';
 
 import Timer from './Timer';
 import ListWrapper from './ListWrapper';
+import { AuthContext } from './AuthContext';
 /** Home Component
  * 
  * This componenet is responsible for rendering the home page.
@@ -15,7 +16,9 @@ import ListWrapper from './ListWrapper';
  * 
  * State: none
  */
-const Home = ({ username, activeList, setActiveList, activeTask, setActiveTask }) => {
+const Home = ({ activeList, setActiveList, activeTask, setActiveTask }) => {
+    // Context
+    const { username } = useContext(AuthContext);
     // Render
     return (
         <div className='Home'>

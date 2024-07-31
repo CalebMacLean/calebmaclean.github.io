@@ -1,8 +1,9 @@
 // Imports
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
+import { AuthContext } from './AuthContext';
 
 /** Profile Component
  * 
@@ -14,14 +15,15 @@ import PomodoroAPI from './PomodoroAPI';
  * State:
  * - formData: (obj) user profile data.
  */
-const Profile = ({ username }) => {
+const Profile = ({}) => {
     // Navigation
     const navigate = useNavigate();
+    const { username } = useContext(AuthContext);
 
     // redirect to login if not logged in
-    if (!username) navigate('/login', { replace: false });
+    // if (!username) navigate('/login', { replace: false });
     // redirect if token is missing
-    if (!localStorage.getItem('token')) navigate('/login', { replace: false });
+    // if (!localStorage.getItem('token')) navigate('/login', { replace: false });
 
     // State
     const INITIAL_STATE = {
@@ -56,6 +58,7 @@ const Profile = ({ username }) => {
     // Effects
     useEffect(() => {
         async function getUser() {
+            if(!username) return;
             const userRes = await PomodoroAPI.getUser(username);
             setUser(userRes);
         }

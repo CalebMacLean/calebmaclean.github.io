@@ -21,25 +21,25 @@ import ListDetail from './ListDetail';
  * 
  * State: none
  */
-const RouterList = ({ username, login, logout, activeList, setActiveList, activeTask, setActiveTask }) => {
+const RouterList = ({ activeList, setActiveList, activeTask, setActiveTask }) => {
     return (
         <Routes>
             {/* Home Page */}
             <Route path="/" element={
-                <Home username={ username } 
+                <Home 
                     activeList={activeList} 
                     activeTask={activeTask} 
                     setActiveTask={setActiveTask} 
                     setActiveList={setActiveList}/>} 
             />
             {/* Log In Form */}
-            <Route path="/login" element={<LogIn login={ login } />} />
+            <Route path="/login" element={<LogIn />} />
             {/* Log Out Feature */}
-            <Route path="/logout" element={<Logout logout={ logout } />} />
+            <Route path="/logout" element={<Logout />} />
             {/* Sign Up Form */}
-            <Route path="/signup" element={<Signup login={ login } />} />
+            <Route path="/signup" element={<Signup />} />
             {/* Profile Page */}
-            <Route path="/profile" element={<Profile username={ username } />} />
+            <Route path="/profile" element={<Profile />} />
             {/* Users Page */}
             <Route path="/users" element={<UserList />} />
             {/* User Page */}

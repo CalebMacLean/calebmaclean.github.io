@@ -1,8 +1,9 @@
 // Imports
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
+import { AuthContext } from './AuthContext';
 
 /** LogIn Component
  * 
@@ -13,7 +14,8 @@ import PomodoroAPI from './PomodoroAPI';
  * State:
  * formData: object { username, password }
  */
-const LogIn = ({ login }) => {
+const LogIn = () => {
+    const { login } = useContext(AuthContext);
     // State
     const [formData, setFormData] = useState({ username: '', password: '' });
     // Navigation

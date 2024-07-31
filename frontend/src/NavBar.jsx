@@ -1,7 +1,8 @@
 // Imports
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { AuthContext } from './AuthContext';
 /** NavBar Component
  * 
  * This component is responsible for rendering the navigation bar. It provides links to the home page, companies page, jobs page, and the user's profile page. It also provides a login and signup link if the user is not logged in, and a logout link if the user is logged in.
@@ -11,7 +12,8 @@ import { NavLink } from 'react-router-dom';
  * 
  * State: none
  */
-const NavBar = ({ username }) => {
+const NavBar = () => {
+    const { username } = useContext(AuthContext);
     // create var to check if a user is logged in
     const isLoggedIn = username? true : false;
     console.log("NavBar isLoggedIn:", isLoggedIn);
