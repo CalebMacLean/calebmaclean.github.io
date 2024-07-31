@@ -24,7 +24,21 @@ class PomodoroAPI {
      */
     static async request(endpoint, data={}, method="get") {
         // Log API call details for debugging
-        console.debug("API Call: ", endpoint, data, method);
+        // console.debug("API Call: ", endpoint, data, method);
+
+        const handleApiError = (methodName, endpoint, err) => {
+            console.log(`API Error in ${methodName}: `, err.response);
+            console.log(`Error details: `, {
+                url: err.config?.url,
+                method: err.config?.method,
+                status: err.response?.status,
+                statusText: err.response?.statusText,
+                data: err.response?.data,
+                path: endpoint
+            });
+            let message = err.response?.data?.error?.message || err.message;
+            throw Array.isArray(message) ? [`${methodName}: ${message}`] : [`${methodName}: ${message}`];
+        }
 
         // construct parameters for any axios request to the API
         const url = `${BASE_URL}/${endpoint}`;
@@ -44,9 +58,7 @@ class PomodoroAPI {
         }
         catch (err) {
             // log the error, and throw an array of the error messages
-            console.log("API Error: ", err.response);
-            let message = err.response.data.error.message;
-            throw Array.isArray(message) ? message : [message];
+            handleApiError(method, endpoint, err);
         }
     }
 
@@ -92,6 +104,12 @@ class PomodoroAPI {
         let res = await this.request(`users/${username}/increment`, data, "patch")
     }
 
+    /** Post a list */
+    static async createList(data) {
+        let res = await this.request('lists', data, "post");
+        return res.list;
+    }
+
     /** Get all lists */
     static async getLists() {
         let res = await this.request('lists');
@@ -113,7 +131,14 @@ class PomodoroAPI {
 
     /** Update a task's completed cycles */
     static async incrementTask(listId, id) {
-        let res = await this.request(`lists/${listId}/tasks/${id}`)
+        let res = await this.request(`lists/${listId}/tasks/${id}`);
+        return res.task;
+    }
+
+    /** Get all task for a specified list */
+    static async getTasksForList(listId) {
+        let res = await this.request(`lists/${listId}/tasks`);
+        return res.tasks;
     }
 };
 

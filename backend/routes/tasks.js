@@ -55,7 +55,7 @@ router.post("/", ensureLoggedIn, async (req, res, next) => {
 router.get("/", ensureLoggedIn, async (req, res, next) => {
     try {
         const tasks = await Task.getTasksByList(req.params.listId);
-
+        console.log("route tasks: ", tasks);
         return res.json({ tasks });
     }
     catch (err) {

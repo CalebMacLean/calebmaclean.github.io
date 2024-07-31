@@ -117,6 +117,11 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
     }, [timerType]);
 
     useEffect(() => {
+        clearTimer(getDeadTime(remainingTime))
+    }, [isRunning])
+
+
+    useEffect(() => {
         async function updateUser() {
             // Update the user's num_pomodoros
             try {
@@ -150,7 +155,7 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
     // Event Handlers
     const onClickStart = () => {
         setIsRunning(true);
-        clearTimer(getDeadTime(remainingTime));
+        // clearTimer(getDeadTime(remainingTime));
     }
 
     const onClickReset = () => {
@@ -168,8 +173,9 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
             default:
                 initialTime = 1500;
         }
-        setRemainingTime(initialTime);
+        setRemainingTime(initialTime); 
         clearTimer(getDeadTime(initialTime));
+        setTimer(`${Math.floor(initialTime / 60)}:00`);
     }
 
     const onClickPause = () => {

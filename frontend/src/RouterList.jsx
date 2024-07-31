@@ -29,7 +29,8 @@ const RouterList = ({ username, login, logout, activeList, setActiveList, active
                 <Home username={ username } 
                     activeList={activeList} 
                     activeTask={activeTask} 
-                    setActiveTask={setActiveTask} />} 
+                    setActiveTask={setActiveTask} 
+                    setActiveList={setActiveList}/>} 
             />
             {/* Log In Form */}
             <Route path="/login" element={<LogIn login={ login } />} />

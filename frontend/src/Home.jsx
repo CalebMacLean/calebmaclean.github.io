@@ -2,6 +2,7 @@
 import React from 'react';
 
 import Timer from './Timer';
+import ListWrapper from './ListWrapper';
 /** Home Component
  * 
  * This componenet is responsible for rendering the home page.
@@ -26,7 +27,12 @@ const Home = ({ username, activeList, setActiveList, activeTask, setActiveTask }
                     setActiveTask={setActiveTask} 
                     activeList={activeList} 
                 />
-                <ListWorking activeList={activeList} setActiveList={setActiveList} />
+                <ListWrapper activeList={activeList} 
+                    setActiveList={setActiveList} 
+                    username={username}
+                    setActiveTask={setActiveTask}
+                    activeTask={activeTask}
+                />
                 </>
             ) : (
                 <>
