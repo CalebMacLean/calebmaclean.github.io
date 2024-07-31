@@ -16,7 +16,7 @@ import PomodoroAPI from './PomodoroAPI';
  * State:
  * - formData: (obj) { title, expectedPomodoros }
  */
-const TaskEditForm = ({ task, setShowEditTaskForm, getTasks, listId }) => {
+const TaskEditForm = ({ task, setShowEditTaskForm, getTasks }) => {
     // State
     const [formData, setFormData] = useState({
         title: task.title,
@@ -34,10 +34,11 @@ const TaskEditForm = ({ task, setShowEditTaskForm, getTasks, listId }) => {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
-        let data = { ...formData, listId };
+        let data = { ...formData };
         try {
-            let res = await PomodoroAPI.updateTask(task.id, data);
-            getTasks(listId);
+            let res = await PomodoroAPI.updateTask(task.listId, task.id, data);
+            console.log("TaskEditForm handleSubmit res: ", res);
+            getTasks(task.listId);
             setShowEditTaskForm(false);
         }
         catch (err) {

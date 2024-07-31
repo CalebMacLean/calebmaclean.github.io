@@ -153,8 +153,9 @@ class PomodoroAPI {
     }
 
     /** Update a task */
-    static async updateTask(taskId, data) {
-        let res = this.request(``)
+    static async updateTask(listId, taskId, data) {
+        let res = this.request(`lists/${listId}/tasks/${taskId}`, data, 'patch');
+        return res.task;
     }
 
     /** Get all friends for a user */
