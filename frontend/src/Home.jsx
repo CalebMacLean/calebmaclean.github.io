@@ -1,5 +1,5 @@
 // Imports
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import Timer from './Timer';
 import ListWrapper from './ListWrapper';
@@ -19,6 +19,8 @@ import { AuthContext } from './AuthContext';
 const Home = ({ activeList, setActiveList, activeTask, setActiveTask }) => {
     // Context
     const { username } = useContext(AuthContext);
+    // State
+    const [isTimerEnd, setIsTimerEnd] = useState(false);
     // Render
     return (
         <div className='Home'>
@@ -26,15 +28,15 @@ const Home = ({ activeList, setActiveList, activeTask, setActiveTask }) => {
                 <>
                 <h2 className='Home-message'>Welcome, {username}</h2>
                 <Timer username={username} 
-                    activeTask={activeTask} 
-                    setActiveTask={setActiveTask} 
-                    activeList={activeList} 
+                    setIsTimerEnd={setIsTimerEnd}
+                    isTimerEnd={isTimerEnd}
                 />
                 <ListWrapper activeList={activeList} 
                     setActiveList={setActiveList} 
                     username={username}
                     setActiveTask={setActiveTask}
                     activeTask={activeTask}
+                    isTimerEnd={isTimerEnd}
                 />
                 </>
             ) : (

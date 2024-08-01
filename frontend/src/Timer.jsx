@@ -18,15 +18,14 @@ import PomodoroAPI from "./PomodoroAPI";
  * - timerType: string
  * - isTimerEnd: boolean
  */
-const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
+const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
     const Ref = useRef(null);
 
     // The state for the timer
     const [timer, setTimer] = useState("25:00");
     const [isRunning, setIsRunning] = useState(false);
-    const [remainingTime, setRemainingTime] = useState(1500);
+    const [remainingTime, setRemainingTime] = useState(60);
     const [timerType, setTimerType] = useState("25min");
-    const [isTimerEnd, setIsTimerEnd] = useState(false);
 
     const getTimeRemaining = (e) => {
         // find the amount of "seconds" between now and target
@@ -51,7 +50,7 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
             getTimeRemaining(e);
         if (total >= 0) {
             // update the timer
-            // check if less than 10 then we need to
+            // check if less than 60 then we need to
             // add '0' at the beginning of the variable
             setTimer(
                 (minutes > 9
@@ -95,16 +94,16 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
         let initialTime;
         switch (timerType) {
             case "25min":
-                initialTime = 1500;
+                initialTime = 60;
                 break;
             case "15min":
                 initialTime = 900;
                 break;
             case "5min":
-                initialTime = 100;
+                initialTime = 300;
                 break;
             default:
-                initialTime = 1500;
+                initialTime = 60;
         }
         setRemainingTime(initialTime);
         setTimer(`${Math.floor(initialTime / 60)}:00`);
@@ -114,6 +113,7 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
     useEffect(() => {
         resetTimer();
         clearTimer(getDeadTime(remainingTime));
+        setIsTimerEnd(false);
     }, [timerType]);
 
     useEffect(() => {
@@ -125,30 +125,21 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
         async function updateUser() {
             // Update the user's num_pomodoros
             try {
-                let updatedUser = await PomodoroAPI.incrementPomodoros(username);
-                return updatedUser;
+                if( timerType === "25min" ) {
+                    console.log("Incrementing Pomodoros username: ", username);
+                    let updatedUser = await PomodoroAPI.incrementPomodoros(username);
+                    console.log("Incrementing Pomodoros updatedUser: ", updatedUser);
+                    return updatedUser;
+                }
             }
             catch (err) {
                 console.error("Update Pomodoros Error: ", err);
             }
         }
-        async function updateTask() {
-            // Update the task's completed cycles
-            try {
-                let updatedTask = await PomodoroAPI.incrementTask(activeList.id, activeTask.id);
-                setActiveTask(updatedTask);
-                return updatedTask;
-            }
-            catch (err) {
-                console.error("Update Task Error: ", err);
-            }
-        }
         if (isTimerEnd) {
             updateUser();
-            updateTask();
             // call a function to handle the timer end
             alert("Timer End");
-            setIsTimerEnd(false);
         }
     }, [isTimerEnd]);
 
@@ -162,16 +153,16 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
         let initialTime;
         switch (timerType) {
             case "25min":
-                initialTime = 1500;
+                initialTime = 60;
                 break;
             case "15min":
                 initialTime = 900;
                 break;
             case "5min":
-                initialTime = 100;
+                initialTime = 300;
                 break;
             default:
-                initialTime = 1500;
+                initialTime = 60;
         }
         setRemainingTime(initialTime); 
         clearTimer(getDeadTime(initialTime));
@@ -189,16 +180,16 @@ const Timer = ({ username, activeTask, activeList, setActiveTask }) => {
         let initialTime;
         switch (type) {
             case "25min":
-                initialTime = 1500;
+                initialTime = 60;
                 break;
             case "15min":
                 initialTime = 900;
                 break;
             case "5min":
-                initialTime = 100;
+                initialTime = 300;
                 break;
             default:
-                initialTime = 1500;
+                initialTime = 60;
         }
         setRemainingTime(initialTime);
         setTimer(`${Math.floor(initialTime / 60)}:00`);

@@ -16,7 +16,7 @@ const NavBar = () => {
     const { username } = useContext(AuthContext);
     // create var to check if a user is logged in
     const isLoggedIn = username? true : false;
-    console.log("NavBar isLoggedIn:", isLoggedIn);
+    // console.log("NavBar isLoggedIn:", isLoggedIn);
 
     // Render
     return (

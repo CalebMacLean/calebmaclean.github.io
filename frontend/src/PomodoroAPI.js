@@ -131,7 +131,7 @@ class PomodoroAPI {
 
     /** Update a task's completed cycles */
     static async incrementTask(listId, id) {
-        let res = await this.request(`lists/${listId}/tasks/${id}`);
+        let res = await this.request(`lists/${listId}/tasks/${id}`, {}, patch);
         return res.task;
     }
 

@@ -15,11 +15,7 @@ import ListActive from './ListActive';
  * State:
  * - tasks: array of task objects like { id, name, pomodoros, completed, list_id }
  */
-const ListWrapper = ({ username, activeList, setActiveList }) => {
-    // State
-    const [tasks, setTasks] = useState([]);
-    const [completedTasks, setCompletedTasks] = useState([]);
-    const [showCreateTask, setShowCreateTask] = useState(false);
+const ListWrapper = ({ username, activeList, setActiveList, setActiveTask, activeTask, isTimerEnd }) => {
     
     // Render
     return (
@@ -30,7 +26,11 @@ const ListWrapper = ({ username, activeList, setActiveList }) => {
             ) : (
                 <>
                 <button onClick={(() => setActiveList(null))}>Back</button>
-                <ListActive activeList={activeList} />
+                <ListActive activeList={activeList} 
+                    setActiveTask={setActiveTask} 
+                    activeTask={activeTask} 
+                    isTimerEnd={isTimerEnd}
+                />
                 </>
             )}
         </div>

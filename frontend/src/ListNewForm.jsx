@@ -14,7 +14,6 @@ import PomodoroAPI from './PomodoroAPI';
  * - formData: object like { name }
  */
 const ListNewForm = ({ username, setShowCreateList, setActiveList }) => {
-    console.log("ListNewForm username: ", username);
     // State
     const INITIAL_STATE = { title: '', listType: true };
     const [formData, setFormData] = useState(INITIAL_STATE);

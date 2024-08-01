@@ -48,7 +48,7 @@ const UserDetail = () => {
             const request = await PomodoroAPI.requestFriend(activeUser, username)
             setHasRequested(true)
         } catch (error) {
-            console.log("Friend Request Error: ", errors)
+            console.log("Friend Request Error: ", error)
         }
     }
 

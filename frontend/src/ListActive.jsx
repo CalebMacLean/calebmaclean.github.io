@@ -17,7 +17,7 @@ import TaskNewForm from './TaskNewForm';
  * - completedTasks: (arr) [id, ...]
  * - showCreateTaskForm: (bool) hides/shows create task form
 */
-const ListActive = ({ activeList }) => {
+const ListActive = ({ activeList, setActiveTask, activeTask, isTimerEnd }) => {
     // console.log("ListActive activeList: ", activeList);
     // State
     const [tasks, setTasks] = useState([]);
@@ -41,9 +41,34 @@ const ListActive = ({ activeList }) => {
 
     // Effects
     useEffect(() => {
+        // get tasks for active list
         getTasks(activeList.id);
 
     }, [activeList]);
+
+    useEffect(() => {
+        if (!activeTask && tasks.length > 0) setActiveTask(tasks[0]);
+    
+    }, [tasks]);
+
+    useEffect(() => {
+        async function completeCycle() {
+            try {
+                let {listId, id} = activeTask;
+                console.log("ListActive completeCycle listId: ", listId);
+                console.log("ListActive completeCycle id: ", id);
+                let res = await PomodoroAPI.incrementTask(listId, id);
+                console.log("ListActive completeCycle res: ", res);
+                getTasks(listId);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
+        if (isTimerEnd) {
+            completeCycle();
+        }
+    }, [isTimerEnd]);
 
     useEffect(() => {
         async function removeTasks() {
@@ -76,6 +101,14 @@ const ListActive = ({ activeList }) => {
         setRemoveCompletedTasks(true);
     }
 
+    const handleSetActiveTask = (e) => {
+        const id = +e.target.id;
+        // console.log("handleSetActiveTask id: ", id);
+        const task = tasks.find(t => t.id === id);
+        // console.log("handleSetActiveTask task: ", task);
+        if( task ) setActiveTask(task);
+    }
+
     // Render
     return (
         <div className="ListActive">
@@ -84,14 +117,32 @@ const ListActive = ({ activeList }) => {
                 <button onClick={handleRemoveCompletedTaskClick}>Remove Finished Tasks</button>
             ) : null}
 
-            {tasks.map(task => (
-                    <Task key={task.id} 
-                        task={task} 
-                        handleCompleteTaskClick={handleCompleteTaskClick} 
+            {tasks.map(task => {
+                // console.log("ListActive task: ", task);
+                // console.log("ListActive activeTask: ", activeTask);
+                if (activeTask && task.id === activeTask.id) {
+                    return (
+                        <Task task={task}
+                            key={task.id}
+                            handleCompleteTaskClick={handleCompleteTaskClick}
+                            getTasks={getTasks}
+                            listId={activeList.id}
+                            isActiveTask={true}
+                            handleSetActiveTask={handleSetActiveTask}
+                        />
+                    )
+                }
+                return (
+                    <Task key={task.id}
+                        task={task}
+                        handleCompleteTaskClick={handleCompleteTaskClick}
                         getTasks={getTasks}
                         listId={activeList.id}
+                        isActiveTask={false}
+                        handleSetActiveTask={handleSetActiveTask}
                     />
-            ))}
+                )
+            })}
 
             {showCreateTaskForm ? (
                 <TaskNewForm listId={activeList.id} setTasks={setTasks} setShowCreateTaskForm={setShowCreateTaskForm} />
