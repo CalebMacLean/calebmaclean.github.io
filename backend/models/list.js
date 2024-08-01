@@ -145,6 +145,7 @@ class List {
             SELECT id,
                    title,
                    list_type AS "listType",
+                   username,
                    created_at AS "createdAt",
                    expires_at AS "expiresAt"
             FROM lists

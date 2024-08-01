@@ -189,7 +189,8 @@ class Task {
                 completed_cycles AS "completedCycles",
                 completed_status AS "completedStatus"
             FROM tasks
-            WHERE list_id = $1`,
+            WHERE list_id = $1
+            ORDER BY id`,
             [listId]
         );
 

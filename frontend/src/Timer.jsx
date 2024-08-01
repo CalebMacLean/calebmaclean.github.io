@@ -24,7 +24,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
     // The state for the timer
     const [timer, setTimer] = useState("25:00");
     const [isRunning, setIsRunning] = useState(false);
-    const [remainingTime, setRemainingTime] = useState(60);
+    const [remainingTime, setRemainingTime] = useState(1500);
     const [timerType, setTimerType] = useState("25min");
 
     const getTimeRemaining = (e) => {
@@ -94,7 +94,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
         let initialTime;
         switch (timerType) {
             case "25min":
-                initialTime = 60;
+                initialTime = 1500;
                 break;
             case "15min":
                 initialTime = 900;
@@ -103,7 +103,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
                 initialTime = 300;
                 break;
             default:
-                initialTime = 60;
+                initialTime = 1500;
         }
         setRemainingTime(initialTime);
         setTimer(`${Math.floor(initialTime / 60)}:00`);
@@ -153,7 +153,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
         let initialTime;
         switch (timerType) {
             case "25min":
-                initialTime = 60;
+                initialTime = 1500;
                 break;
             case "15min":
                 initialTime = 900;
@@ -162,7 +162,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
                 initialTime = 300;
                 break;
             default:
-                initialTime = 60;
+                initialTime = 1500;
         }
         setRemainingTime(initialTime); 
         clearTimer(getDeadTime(initialTime));
@@ -180,7 +180,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
         let initialTime;
         switch (type) {
             case "25min":
-                initialTime = 60;
+                initialTime = 1500;
                 break;
             case "15min":
                 initialTime = 900;
@@ -189,7 +189,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
                 initialTime = 300;
                 break;
             default:
-                initialTime = 60;
+                initialTime = 1500;
         }
         setRemainingTime(initialTime);
         setTimer(`${Math.floor(initialTime / 60)}:00`);
