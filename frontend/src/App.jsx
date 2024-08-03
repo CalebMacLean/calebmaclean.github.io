@@ -1,5 +1,5 @@
 // Imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import NavBar from './NavBar';
 import RouterList from './RouterList';
@@ -19,18 +19,29 @@ function App() {
   // Root State
   const [activeList, setActiveList] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
+  const [timerType, setTimerType] = useState('FOCUS');
+
+  // UseEffect
+  useEffect(()=> {
+    console.log(timerType)
+  }, [timerType])
+  const mainClass = timerType === 'FOCUS' ? 'main focus' : 'main break';
 
   // Render
   return (
-    <>
+    <div className='app'>
       <NavBar />
-      <RouterList 
-        setActiveList={setActiveList}
-        setActiveTask={setActiveTask}
-        activeList={activeList}
-        activeTask={activeTask}
-      />
-    </>
+      <div className={mainClass}>
+        <RouterList
+          setActiveList={setActiveList}
+          setActiveTask={setActiveTask}
+          activeList={activeList}
+          activeTask={activeTask}
+          timerType={timerType}
+          setTimerType={setTimerType}
+        />
+      </div>
+    </div>
   )
 }
 

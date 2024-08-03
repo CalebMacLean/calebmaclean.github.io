@@ -1,0 +1,44 @@
+.Lists {
+    margin: 0 1rem 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f0f0f0;
+    min-height: 90vh;
+    width: 80%;
+}
+
+.Lists-header {
+    width: 100%;
+    max-width: 60rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.Lists-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0;
+}
+
+.Lists-main {
+    width: 100%;
+    max-width: 60rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Lists-lists {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.5rem;
+}

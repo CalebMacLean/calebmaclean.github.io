@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './UserCard.css'
+
 /** UserCard Component
  * 
  * This component is responsible for rendering a user card. It provides a link to the user's profile page.
@@ -16,11 +18,16 @@ const UserCard = ({ user }) => {
     return (
         <div className="UserCard">
             <Link to={`/users/${user.username}`}>
-                <img src={"src/assets/default_pfp.jpg"} alt={user.username} />
-                <h3>{user.username}</h3>
-                <p>{user.first_name} {user.last_name}</p>
-                <p>{user.email}</p>
-                <p>{user.num_pomodoros} Pomodoros</p>
+                <div className="UserCard-header">
+                <div className="img-wrapper">
+                    <img className="UserCard-img" src={"src/assets/default_pfp.jpg"} alt={user.username} />
+                </div>
+                    <h3>{user.username}</h3>
+                </div>
+                <div className="info-wrapper">
+                    <p>{user.first_name} {user.last_name}</p>
+                    <p>{user.email}</p>
+                </div>
             </Link>
         </div>
     )

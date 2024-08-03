@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
 import { AuthContext } from './AuthContext';
+import './Signup.css';
 /** Signup Component
  * 
  * This component is responsible for rendering the signup form.
@@ -59,58 +60,70 @@ const Signup = () => {
     // Render
     return (
         <div className="Signup">
-            <h1>Signup</h1>
+            <h1 className='Signup-title'>Signup</h1>
 
-            <form className='Signup-form' onSubmit={ handleSubmit }>
-                <label htmlFor='username'>Username</label>
-                <input 
-                    type='text' 
-                    id='username' 
-                    name='username'
-                    onChange={ handleChange }
-                />
-
-                <label htmlFor='password'>Password</label>
-                <input 
-                    type='password' 
-                    id='password' 
-                    name='password'
-                    onChange={ handleChange }
-                />
-
-                <label htmlFor='firstName'>First Name</label>
-                <input 
-                    type='text' 
-                    id='firstName' 
-                    name='firstName'
-                    onChange={ handleChange } 
-                />
-
-                <label htmlFor='lastName'>Last Name</label>
-                <input 
-                    type='text' 
-                    id='lastName' 
-                    name='lastName'
-                    onChange={ handleChange }
-                />
-
-                <label htmlFor='email'>Email</label>
-                <input 
-                    type='email' 
-                    id='email' 
-                    name='email' 
-                    onChange={ handleChange }
-                />
-
-                <label htmlFor='avatar'>Avatar</label>
-                <input 
-                    type='text' 
-                    id='avatar' 
-                    name='avatar' 
-                    onChange={ handleChange }
-                />
-
-                <button>Submit</button>
+            <form className='Signup-form form' onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label className='form-label' htmlFor='username'>Username</label>
+                    <input
+                        className='form-control'
+                        type='text'
+                        id='username'
+                        name='username'
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label className='form-label' htmlFor='password'>Password</label>
+                    <input
+                        className='form-control'
+                        type='password'
+                        id='password'
+                        name='password'
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label className='form-label' htmlFor='firstName'>First Name</label>
+                    <input
+                        className='form-control'
+                        type='text'
+                        id='firstName'
+                        name='firstName'
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label className='form-label' htmlFor='lastName'>Last Name</label>
+                    <input
+                        className='form-control'
+                        type='text'
+                        id='lastName'
+                        name='lastName'
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label className='form-label' htmlFor='email'>Email</label>
+                    <input
+                        className='form-control'
+                        type='email'
+                        id='email'
+                        name='email'
+                        onChange={handleChange}
+                    />
+                </div>
+                {/* <div className="form-group">
+                    <label className='form-label' htmlFor='avatar'>Avatar</label>
+                    <input
+                        className='form-control'
+                        type='text'
+                        id='avatar'
+                        name='avatar'
+                        onChange={handleChange}
+                    />
+                </div> */}
+                <button className='btn btn-sm btn-primary'>Submit</button>
             </form>
         </div>
     )

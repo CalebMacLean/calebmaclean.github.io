@@ -1,0 +1,36 @@
+.ListActive {
+    /* background-color: magenta; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ListActive-btn-wrapper {
+    /* background-color: lightblue; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 3.5rem;
+    width: 100%;
+}
+
+.ListActive-task-wrapper {
+    /* background-color: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    padding: 0.5rem;
+}
+
+.task-btn-wrapper {
+    /* background-color: lightsalmon; */
+    width: 70%;
+    min-height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

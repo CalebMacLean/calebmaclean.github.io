@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PomodoroAPI from './PomodoroAPI';
 import ListCard from './ListCard';
 import SearchBar from './SearchBar';
+import './Lists.css';
 
 /** Lists Component
  * 
@@ -36,13 +37,17 @@ const Lists = () => {
     // Render
     return (
         <div className="Lists">
-            <h1 className="Lists-title">Lists</h1>
-            <SearchBar search={search} />
+            <div className="Lists-header">
 
-            <div className="Lists-lists">
-                {lists.map(list => (
-                    <ListCard key={list.id} list={list} />
-                ))}
+                <h1 className="Lists-title">Lists</h1>
+                <SearchBar search={search} />
+            </div>
+            <div className="Lists-main">
+                <div className="Lists-lists">
+                    {lists.map(list => (
+                        <ListCard key={list.id} list={list} />
+                    ))}
+                </div>
             </div>
         </div>
     )

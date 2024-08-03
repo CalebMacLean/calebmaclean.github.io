@@ -1,0 +1,17 @@
+.Home {
+    /* background-color: coral; */
+    width: 100%;
+    min-height: 100vh;
+}
+.Home-authenticated {
+    /* background-color: lightblue; */
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Home-message {
+    margin: 1rem 0 1rem 0;
+}

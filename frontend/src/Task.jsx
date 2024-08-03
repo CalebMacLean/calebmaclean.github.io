@@ -23,13 +23,14 @@ const Task = ({ task, handleCompleteTaskClick, getTasks, listId, isActiveTask, h
         setShowEditTaskForm(true);
     }
 
-    // Conditional Variables
+    // Conditional VariableT
     // console.log("Task isActiveTask: ", isActiveTask);
-    const className = isActiveTask ? "Task Task-active" : "Task";
+    const className = isActiveTask ? "Task task-active" : "Task";
     // console.log("Task className: ", className);
+    
     // Render
     return (
-        <>
+        <div className='Task-wrapper'>
         { showEditTaskForm ? (
             <TaskEditForm task={task} 
                 setShowEditTaskForm={setShowEditTaskForm}
@@ -37,14 +38,20 @@ const Task = ({ task, handleCompleteTaskClick, getTasks, listId, isActiveTask, h
                 listId={listId} 
             />
         ) : (
-            <div className={className} id={task.id} onClick={handleSetActiveTask}>
-                <h3>{ task.title }</h3>
-                <div>{task.completedCycles}/{task.expectedPomodoros}</div>
-                <button id={task.id} onClick={handleCompleteTaskClick}>Complete Task</button>
-                <button id={task.id} onClick={handleEditTaskClick}>Edit</button>
+            <div className={className + " container"} id={task.id} onClick={handleSetActiveTask}>
+                <button className='Task-item complete-btn' id={task.id} onClick={handleCompleteTaskClick}></button>
+                <p className='Task-title task-item'>{ task.title }</p>
+                <div className='Task-stat task-item'>{task.completedCycles}/{task.expectedPomodoros}</div>
+                <div id={task.id} 
+                    onClick={handleEditTaskClick}
+                    className='Task-edit-btn-wrapper'>
+                        <div className="Task-edit-btn-circle"></div>
+                        <div className="Task-edit-btn-circle"></div>
+                        <div className="Task-edit-btn-circle"></div>
+                    </div>
             </div>
         )}
-        </>
+        </div>
     )
 };
 

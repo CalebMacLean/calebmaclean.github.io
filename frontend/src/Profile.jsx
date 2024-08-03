@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
 import { AuthContext } from './AuthContext';
+import './Profile.css';
 
 /** Profile Component
  * 
@@ -95,113 +96,148 @@ const Profile = ({ }) => {
 
     // Render
     return (
-        <div className='Profile'>
+        <div className='Profile-wrapper'>
             {user ? (
-                <>
-                    <div className="profile-card">
-                        <h1 className='Profile-tile'>{user.username}'s Page</h1>
-                        <h3>{user.numPomodoros} pomodoro cycles completed.</h3>
-                        <img src={"src/" + user.avatar} alt={user.username} />
+                <div className='Profile'>
+                    <div className="Profile-header">
+                        <div className="Profile-header-left">
+                            <img className='Profile-img' src={"src/" + user.avatar} alt={user.username} />
+                        </div>
+                        <div className="Profile-header-right">
+                            <h1 className='Profile-title'>{user.username}'s Page</h1>
+                            <h3 className='Profile-stat'>{user.numPomodoros} pomodoro cycles completed.</h3>
+                        </div>
                     </div>
 
-
-                    <form className='Profile-form' onSubmit={handleSubmit}>
-                        <label htmlFor='username'>Username:</label>
-                        <input
-                            type='text'
-                            id='username'
-                            name='username'
-                            defaultValue={user.username}
-                            onChange={handleChange}
-                            disabled
-                        />
-
-                        <label htmlFor='firstName'>First Name:</label>
-                        <input
-                            type='text'
-                            id='firstName'
-                            name='firstName'
-                            defaultValue={user.firstName}
-                            onChange={handleChange}
-                        />
-
-                        <label htmlFor='lastName'>Last Name:</label>
-                        <input
-                            type='text'
-                            id='lastName'
-                            name='lastName'
-                            defaultValue={user.lastName}
-                            onChange={handleChange}
-                        />
-
-                        <label htmlFor='email'>Email:</label>
-                        <input
-                            type='email'
-                            id='email'
-                            name='email'
-                            defaultValue={user.email}
-                            onChange={handleChange}
-                        />
-
-                        <label htmlFor='avatar'>Avatar:</label>
-                        <input
-                            type='text'
-                            id='avatar'
-                            name='avatar'
-                            defaultValue={user.avatar}
-                            onChange={handleChange}
-                        />
-
-                        <button>Save Changes</button>
-                    </form>
-                    <div>
-                        {user.lists.length > 0 ? (
-                            <>
+                    <div className="Profile-main">
+                        <form className='Profile-form form' onSubmit={handleSubmit}>
+                            <div className="form-header">
+                                <h2>Edit Profile</h2>
+                            </div>
+                            <div className="form-group">
+                                <label className='form-label' htmlFor='username'>Username:</label>
+                                <input
+                                    className='form-control'
+                                    type='text'
+                                    id='username'
+                                    name='username'
+                                    defaultValue={user.username}
+                                    onChange={handleChange}
+                                    disabled
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className='form-label' htmlFor='firstName'>First Name:</label>
+                                <input
+                                    className='form-control'
+                                    type='text'
+                                    id='firstName'
+                                    name='firstName'
+                                    defaultValue={user.firstName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className='form-label' htmlFor='lastName'>Last Name:</label>
+                                <input
+                                    className='form-control'
+                                    type='text'
+                                    id='lastName'
+                                    name='lastName'
+                                    defaultValue={user.lastName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className='form-label' htmlFor='email'>Email:</label>
+                                <input
+                                    className='form-control'
+                                    type='email'
+                                    id='email'
+                                    name='email'
+                                    defaultValue={user.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className='form-label' htmlFor='avatar'>Avatar:</label>
+                                <input
+                                    className='form-control'
+                                    type='text'
+                                    id='avatar'
+                                    name='avatar'
+                                    defaultValue={user.avatar}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <button className='btn btn-sm btn-secondary'>Save Changes</button>
+                        </form>
+                        <div className='Profile-lists-wrapper'>
+                            <div className='Profile-lists-header'>
                                 <h3>Lists</h3>
-                                <ul>
-                                    {user.lists.map(list => (
-                                        <li key={list.id}>{list.title}</li>
-                                    ))}
-                                </ul>
-                            </>
-                        ) : (
-                            <p>No Lists</p>
-                        )}
-                    </div>
-                    <div>
-                        {friends.length > 0 ? (
-                            <>
-                                <h1>Friends</h1>
-                                <ul>
-                                    {friends.map(friend => (
-                                        <li key={friend.username}>{friend.username}</li>
-                                    ))}
-                                </ul>
-                            </>
-                        ) :
-                            <p>No Friends</p>
-                        }
-                    </div>
-                    <div>
-                        {friendRequests.length > 0 ? (
-                            <>
-                                <h1>Friend Requests</h1>
-                                <div>
-                                    {friendRequests.map(request => (
-                                        <div key={request.username}>
-                                            <p key={request.username}>{request.username}</p>
-                                            <button onClick={() => handleApprove(username, request.username)}>Approve</button>
-                                            <button  onClick={() => handleDeny(username, request.username)}>Reject</button>
+                            </div>
+                            {user.lists.length > 0 ? (
+                                <>
+                                    <div className='Profile-lists-main'>
+                                        <div className='Profile-lists'>
+                                            {user.lists.map(list => (
+                                                <span className='Profile-list' key={list.id}>{list.title}</span>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <p>No Lists</p>
+                            )}
+                        </div>
+                        <div className='Profile-friends-wrapper'>
+                            <div className='Profile-friends-header'>
+                                <h3>Friends</h3>
+                            </div>
+                            {friends.length > 0 ? (
+                                <>
+                                    <div className='Profile-friends-main'>
+                                        {friends.map(friend => (
+                                            <span className='Profile-friend' key={friend.username}>{friend.username}</span>
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className='Profile-friends-main'>
+                                        <p>No Friends</p>
+                                    </div>
+                                </>
+                            )
+                            }
+                        </div>
+                        <div className='Profile-requests-wrapper'>
+                            <div className='Profile-requests-header'>
+                                <h3>Friend Requests</h3>
+                            </div>
+                            {friendRequests.length > 0 ? (
+                                <>
+                                    <div className='Profile-requests-main'>
+                                        {friendRequests.map(request => (
+                                            <div className='Profile-request' key={request.username}>
+                                                <div className="Profile-request-left">
+                                                    <p key={request.username}>{request.username}</p>
+                                                </div>
+                                                <div className="Profile-request-right">
+                                                    <button className="btn btn-sm btn-primary" onClick={() => handleApprove(username, request.username)}>Approve</button>
+                                                    <button className="btn btn-sm btn-primary" onClick={() => handleDeny(username, request.username)}>Reject</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
 
-                            </>
-                        ) :
-                            <p>No Friend Requests</p>
-                        }
+                                </>
+                            ) :
+                                <p>No Friend Requests</p>
+                            }
+                        </div>
                     </div>
-                </>
+                </div>
             ) : (
                 <>
                     <h1>Loading...</h1>

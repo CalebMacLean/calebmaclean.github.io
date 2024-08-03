@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+import './ListCard.css';
 /** ListCard Component
  * 
  * This component is responsible for rendering a list card. It provides a link to the list's detail page.

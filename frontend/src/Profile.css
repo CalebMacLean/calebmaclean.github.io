@@ -1,0 +1,250 @@
+.Profile-wrapper {
+    width: 60vw;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+.Profile {
+    width: 100%;
+    min-height: 100vh;
+    /* background-color: aqua; */
+}
+
+.Profile-header {
+    width: 100%;
+    min-height: 20vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-image: linear-gradient(126deg, rgb(255, 255, 134), pink);
+    flex-shrink: 0;
+    margin-bottom: 3rem;
+}
+
+.Profile-img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    border: 0.2rem solid #fff;
+    box-shadow: 0 0 0.5rem 0.1rem #000;
+    object-fit: cover;
+}
+
+.Profile-main {
+    width: 100%;
+    min-height: 50vh;
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    grid-template-rows: 0.75fr 1.25fr;
+    grid-template-areas: 
+    "form list"
+    "frnd rqst";
+    gap: 5%;
+    /* background-color: #ffddaa;   */
+}
+
+.Profile-form {
+    grid-area: "form";
+    width: 100%;
+    min-height: 50vh;
+    padding: 2rem 0 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    /* background-color: blueviolet; */
+}
+
+.form-group {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.Profile-form .btn {
+    margin-top: 0.5rem;
+}
+
+.Profile-lists-wrapper {
+    grid-area: "list";
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    /* background-color: burlywood; */
+}
+
+.Profile-lists-header {
+    width: 100%;
+    min-height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    /* background-color: #ffddaa; */
+    box-shadow: 0 0 0.1rem 0.1rem #000;
+}
+
+.Profile-lists-main {
+    width: 100%;
+    margin-top: 1.2rem;
+    /* background-color: cadetblue; */
+    min-height: 45vh;
+}
+
+.Profile-lists {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* background-color: #ffddaa; */
+}
+
+.Profile-list {
+    width: 30%;
+    min-height: 3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background-color: #ffddaa; */
+    box-shadow: 0 0 0.5rem 0.1rem #000;
+}
+
+.Profile-list:hover {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.Profile-friends-wrapper {
+    grid-area: "frnd";
+    width: 100%;
+    min-height: 50vh;
+    gap: 2%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    /* background-color: purple; */
+}
+
+.Profile-friends-header {
+    width: 100%;
+    min-height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    /* background-color: #ffddaa; */
+    box-shadow: 0 0 0.1rem 0.1rem #000;
+}
+
+.Profile-friends-main {
+    width: 100%;
+    margin-top: 1.2rem;
+    /* background-color: cadetblue; */
+    min-height: 45vh;
+    max-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.Profile-friend {
+    width: 45%;
+    gap: 5%;
+    min-height: 4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.1rem solid #000;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0.5rem 0.1rem #000;
+}
+
+.Profile-friend:hover {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.Profile-requests-wrapper {
+    grid-area: "rqst";
+    width: 100%;
+    min-height: 50vh;
+    gap: 2%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    /* background-color: orangered; */
+}
+
+.Profile-requests-header {
+    width: 100%;
+    min-height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    /* background-color: #ffddaa; */
+    box-shadow: 0 0 0.1rem 0.1rem #000;
+}
+
+.Profile-requests-main {
+    width: 100%;
+    margin-top: 1.2rem;
+    /* background-color: darkslategray; */
+    min-height: 45vh;
+    max-height: 100%;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.Profile-request {
+    padding: 0.5rem 0.5rem 0.5rem 0.5;
+    width: 100%;
+    min-height: 8vh;
+    max-height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0.3rem solid #fff;
+    /* background-color: beige; */
+}
+
+.Profile-request-left {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: greenyellow; */
+}
+
+.Profile-request-left p {
+    height: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+    overflow: hidden;
+}
+
+.Profile-request-right {
+    width: 45%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background-color: lightcoral; */
+}

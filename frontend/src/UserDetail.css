@@ -1,0 +1,94 @@
+.UserDetail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    max-width: 40rem;
+    margin: 2rem auto;
+}
+
+.UserDetail {
+    width: 90%;
+    /* background-color: blueviolet; */
+}
+
+.UserDetail-header {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    border-bottom: 0.1rem solid #ddd;
+}
+
+.UserDetail img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.UserDetail h3 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: #333;
+}
+
+.UserDetail p {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0.5rem 0;
+}
+
+.UserDetail .friend-status {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+.UserDetail-lists-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.UserDetail-lists-header {
+    width: 100%;
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid #ddd;
+}
+
+.UserDetail-lists-main {
+    /* background-color: aliceblue; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-left: 1.2rem;
+}
+
+.UserDetail-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 0.1rem solid #ddd;
+    border-radius: 0.4rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    width: 40%;
+    min-height: 10vh;
+    margin: 1rem;
+}

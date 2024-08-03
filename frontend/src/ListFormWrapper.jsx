@@ -1,13 +1,13 @@
 // Imports
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PomodoroAPI from './PomodoroAPI';
 import ListNewForm from './ListNewForm';
 import ListChooseForm from './ListChooseForm';
-
+import './ListFormWrapper.css';
 /** ListFormWrapper Component */
 
-const ListFormWrapper = ({username, setActiveList }) => {
+const ListFormWrapper = ({ username, setActiveList }) => {
     // State
     // stores the lists that the user has created
     const [lists, setLists] = useState([]);
@@ -42,7 +42,7 @@ const ListFormWrapper = ({username, setActiveList }) => {
     const handleChooseListClick = async () => {
         setShowChooseListForm(true);
     }
-    
+
     // Conditional Variables
     const hasNoActiveForm = !showCreateListForm && !showChooseListForm;
     const isOnlyCreateListForm = showCreateListForm && !showChooseListForm;
@@ -53,9 +53,9 @@ const ListFormWrapper = ({username, setActiveList }) => {
             {/* If a form is inactive show both form buttons */}
             { hasNoActiveForm ? (
                 <>
-                    <button onClick={handleCreateListClick}>Create List</button>
+                    <button className="btn btn-sm btn-secondary" onClick={handleCreateListClick}>Create List</button>
 
-                    <button onClick={handleChooseListClick}>Choose List</button>
+                    <button className="btn btn-sm btn-secondary" onClick={handleChooseListClick}>Choose List</button>
                 </>
             ) : null 
             }
@@ -78,6 +78,42 @@ const ListFormWrapper = ({username, setActiveList }) => {
             }
         </div>
     )
+//     return (
+//         <div className="container mt-5 w-100">
+//             <div className="row justify-content-center">
+//                 <div className="col-md-10">
+//                     <div className="card">
+//                         <div className="card-body">
+//                             <div className="ListFormWrapper">
+//                                 {/* If a form is inactive show both form buttons */}
+//                                 {hasNoActiveForm ? (
+//                                     <div className="d-flex justify-content-between mb-3">
+//                                         <button className="btn btn-primary" onClick={handleCreateListClick}>Create List</button>
+//                                         <button className="btn btn-secondary" onClick={handleChooseListClick}>Choose List</button>
+//                                     </div>
+//                                 ) : null}
+//                                 {/* If a form is active then the other form shouldn't be */}
+//                                 {isOnlyCreateListForm ? (
+//                                     <ListNewForm
+//                                         username={username}
+//                                         setShowCreateList={setShowCreateListForm}
+//                                         setActiveList={setActiveList}
+//                                     />
+//                                 ) : null}
+//                                 {isOnlyChooseListForm ? (
+//                                     <ListChooseForm
+//                                         lists={lists}
+//                                         setActiveList={setActiveList}
+//                                         setShowChooseList={setShowChooseListForm}
+//                                     />
+//                                 ) : null}
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     )
 };
 
 // Exports

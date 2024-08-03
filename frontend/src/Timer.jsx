@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import PomodoroAPI from "./PomodoroAPI";
+import './Timer.css';
 
 /** Timer Component
  * 
@@ -18,7 +19,7 @@ import PomodoroAPI from "./PomodoroAPI";
  * - timerType: string
  * - isTimerEnd: boolean
  */
-const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
+const Timer = ({ username, setIsTimerEnd, isTimerEnd, setAppTimerType }) => {
     const Ref = useRef(null);
 
     // The state for the timer
@@ -125,7 +126,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
         async function updateUser() {
             // Update the user's num_pomodoros
             try {
-                if( timerType === "25min" ) {
+                if (timerType === "25min") {
                     console.log("Incrementing Pomodoros username: ", username);
                     let updatedUser = await PomodoroAPI.incrementPomodoros(username);
                     console.log("Incrementing Pomodoros updatedUser: ", updatedUser);
@@ -164,7 +165,7 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
             default:
                 initialTime = 1500;
         }
-        setRemainingTime(initialTime); 
+        setRemainingTime(initialTime);
         clearTimer(getDeadTime(initialTime));
         setTimer(`${Math.floor(initialTime / 60)}:00`);
     }
@@ -181,12 +182,15 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
         switch (type) {
             case "25min":
                 initialTime = 1500;
+                setAppTimerType("FOCUS");
                 break;
             case "15min":
                 initialTime = 900;
+                setAppTimerType("BREAK");
                 break;
             case "5min":
                 initialTime = 300;
+                setAppTimerType("BREAK");
                 break;
             default:
                 initialTime = 1500;
@@ -197,21 +201,22 @@ const Timer = ({ username, setIsTimerEnd, isTimerEnd }) => {
 
     // Render
     return (
-        <div
-            style={{ textAlign: "center", margin: "auto" }}>
-            <h1 style={{ color: "green" }}>
-                GeeksforGeeks
-            </h1>
-            <h3>Countdown Timer Using React JS</h3>
+        <div className="Timer container w-100">
+            <div className="Timer-type-btns">
+                <button className="btn btn-primary btn-sm timer-btn" onClick={() => onClickChangeType("25min")}>Focus</button>
+                <button className="btn btn-primary btn-sm timer-btn" onClick={() => onClickChangeType("15min")}>Long Break</button>
+                <button className="btn btn-primary btn-sm timer-btn" onClick={() => onClickChangeType("5min")}>Short Break</button>
+            </div>
 
-            <button onClick={() => onClickChangeType("25min")}>Focus</button>
-            <button onClick={() => onClickChangeType("15min")}>Long Break</button>
-            <button onClick={() => onClickChangeType("5min")}>Short Break</button>
+            <div className="Timer-timer">
+                <h2 className="Timer-timer-text">{timer}</h2>
+            </div>
 
-            <h2>{timer}</h2>
-            <button onClick={onClickStart}>Start</button>
-            <button onClick={onClickReset}>Reset</button>
-            <button onClick={onClickPause}>Pause</button>
+            <div className="Timer-timer-btns">
+                <button className="btn btn-primary btn-sm timer-btn" onClick={onClickStart}>Start</button>
+                <button className="btn btn-primary btn-sm timer-btn" onClick={onClickReset}>Reset</button>
+                <button className="btn btn-primary btn-sm timer-btn" onClick={onClickPause}>Pause</button>
+            </div>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
 import { AuthContext } from './AuthContext';
+import './LogIn.css';
 
 /** LogIn Component
  * 
@@ -55,13 +56,13 @@ const LogIn = () => {
 
     // Render
     return (
-        <div className="LogIn">
-            <h1 className="LogIn-title">Log In</h1>
+        <div className="Login">
+            <h1 className="Login-title">Log In</h1>
 
-            <form className="LogIn Form" onSubmit={handleSubmit}>
+            <form className="Login-form form" onSubmit={handleSubmit}>
                 {/* Username Input */}
                 <div className = "form-group">
-                    <label htmlFor="username">Username</label>
+                    <label className="form-label" htmlFor="username">Username</label>
                     <input
                         className="form-control"
                         id="username"
@@ -72,7 +73,7 @@ const LogIn = () => {
                 </div>
                 {/* Password Input */}
                 <div className = "form-group">
-                    <label htmlFor="password">Password</label>
+                    <label className='form-label' htmlFor="password">Password</label>
                     <input
                         className="form-control"
                         id="password"
@@ -82,7 +83,7 @@ const LogIn = () => {
                     />
                 </div>
                 {/* Submission Button */}
-                <button className='btn'>Log In!</button>
+                <button className="btn btn-sm btn-primary">Log In!</button>
             </form>
         </div>
     )

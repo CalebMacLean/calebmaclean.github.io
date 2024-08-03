@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import PomodoroAPI from './PomodoroAPI';
-
+import './TaskEditForm.css';
 /** TaskEditForm Component
  * 
  * This component is responsible for rendering a form to edit a task.
@@ -49,22 +49,31 @@ const TaskEditForm = ({ task, setShowEditTaskForm, getTasks }) => {
     // Render
     return (
         <div className='TaskEditForm'>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='title'>Title:</label>
-                <input
-                    id='title'
-                    name='title'
-                    value={formData.title}
-                    onChange={handleChange}
-                />
-                <label htmlFor='expectedPomodoros'>Expected Pomodoros:</label>
-                <input
-                    id='expectedPomodoros'
-                    name='expectedPomodoros'
-                    value={formData.expectedPomodoros}
-                    onChange={handleChange}
-                />
-                <button>Save</button>
+            <form className='TaskEditForm-form form' onSubmit={handleSubmit}>
+                <div className="TaskEditForm-input-wrapper form-floating">
+                    <input
+                        className='form-control'
+                        id='title'
+                        name='title'
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                    <label className='form-label' htmlFor='title'>Title:</label>
+                </div>
+                <div className="TaskEditForm-input-wrapper form-floating">
+                    <input
+                        className='form-control'
+                        id='expectedPomodoros'
+                        name='expectedPomodoros'
+                        value={formData.expectedPomodoros}
+                        onChange={handleChange}
+                    />
+                    <label className='form-label' htmlFor='expectedPomodoros'>Expected Pomodoros:</label>
+                </div>
+                <div className="TaskEditForm-btn-wrapper">
+                    <button className='TaskEditForm-btn btn btn-secondary btn-sm'>Save</button>
+                    <button onClick={() => setShowEditTaskForm(false)} className='TaskEditForm-btn btn btn-secondary btn-sm'>Back</button>
+                </div>
             </form>
         </div>
     )

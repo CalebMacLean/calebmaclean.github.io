@@ -1,0 +1,28 @@
+.SearchBar {
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.5rem;
+    width: 70%;
+    min-height: 5vh;
+    display: flex;
+    justify-content: space-evenly;
+    justify-self: center;
+    align-self: center;
+    /* background-color: lightblue; */
+}
+
+.search-input {
+    width: 100%;
+    font-size: 1rem;
+    border: 0.1rem solid #000;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    /* background-color: aqua; */
+}
+
+.SearchBar-btn-wrapper {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #000; */
+}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PomodoroAPI from './PomodoroAPI';
 import UserCard from './UserCard';
 import SearchBar from './SearchBar';
+import './UserList.css';
 
 /** UserList Component
  * 

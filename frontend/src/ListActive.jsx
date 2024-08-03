@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PomodoroAPI from './PomodoroAPI';
 import Task from './Task';
 import TaskNewForm from './TaskNewForm';
+import './ListActive.css';
 
 /** ListActive Component
  * 
@@ -48,13 +49,13 @@ const ListActive = ({ activeList, setActiveTask, activeTask, isTimerEnd }) => {
 
     useEffect(() => {
         if (!activeTask && tasks.length > 0) setActiveTask(tasks[0]);
-    
+
     }, [tasks]);
 
     useEffect(() => {
         async function completeCycle() {
             try {
-                let {listId, id} = activeTask;
+                let { listId, id } = activeTask;
                 console.log("ListActive completeCycle listId: ", listId);
                 console.log("ListActive completeCycle id: ", id);
                 let res = await PomodoroAPI.incrementTask(listId, id);
@@ -94,6 +95,7 @@ const ListActive = ({ activeList, setActiveTask, activeTask, isTimerEnd }) => {
 
     const handleCompleteTaskClick = (e) => {
         const taskId = e.target.id;
+        e.target.classList.add("completed");
         setCompletedTasks([...completedTasks, +taskId]);
     }
 
@@ -106,49 +108,56 @@ const ListActive = ({ activeList, setActiveTask, activeTask, isTimerEnd }) => {
         // console.log("handleSetActiveTask id: ", id);
         const task = tasks.find(t => t.id === id);
         // console.log("handleSetActiveTask task: ", task);
-        if( task ) setActiveTask(task);
+        if (task) setActiveTask(task);
     }
 
     // Render
     return (
-        <div className="ListActive">
-            <h1>{activeList.title}</h1>
-            {completedTasks.length > 0 ? (
-                <button onClick={handleRemoveCompletedTaskClick}>Remove Finished Tasks</button>
-            ) : null}
-
-            {tasks.map(task => {
-                // console.log("ListActive task: ", task);
-                // console.log("ListActive activeTask: ", activeTask);
-                if (activeTask && task.id === activeTask.id) {
+        <div className="ListActive container">
+            <div className="ListActive-header row">
+                <h1 className="ListActive-title">{activeList.title}</h1>
+            </div>
+            <div className="ListActive-btn-wrapper">
+                {completedTasks.length > 0 ? (
+                    <button className='btn btn-sm btn-secondary'
+                        onClick={handleRemoveCompletedTaskClick}>Remove Finished Tasks</button>
+                ) : null}
+            </div>
+            <div className="ListActive-task-wrapper">
+                {tasks.map(task => {
+                    // console.log("ListActive task: ", task);
+                    // console.log("ListActive activeTask: ", activeTask);
+                    if (activeTask && task.id === activeTask.id) {
+                        return (
+                            <Task task={task}
+                                key={task.id}
+                                handleCompleteTaskClick={handleCompleteTaskClick}
+                                getTasks={getTasks}
+                                listId={activeList.id}
+                                isActiveTask={true}
+                                handleSetActiveTask={handleSetActiveTask}
+                            />
+                        )
+                    }
                     return (
-                        <Task task={task}
-                            key={task.id}
+                        <Task key={task.id}
+                            task={task}
                             handleCompleteTaskClick={handleCompleteTaskClick}
                             getTasks={getTasks}
                             listId={activeList.id}
-                            isActiveTask={true}
+                            isActiveTask={false}
                             handleSetActiveTask={handleSetActiveTask}
                         />
                     )
-                }
-                return (
-                    <Task key={task.id}
-                        task={task}
-                        handleCompleteTaskClick={handleCompleteTaskClick}
-                        getTasks={getTasks}
-                        listId={activeList.id}
-                        isActiveTask={false}
-                        handleSetActiveTask={handleSetActiveTask}
-                    />
-                )
-            })}
-
-            {showCreateTaskForm ? (
-                <TaskNewForm listId={activeList.id} setTasks={setTasks} setShowCreateTaskForm={setShowCreateTaskForm} />
-            ) : (
-                <button onClick={handleCreateTaskClick}>Create Task</button>
-            )}
+                })}
+            </div>
+            <div className="task-btn-wrapper">
+                {showCreateTaskForm ? (
+                    <TaskNewForm listId={activeList.id} setTasks={setTasks} setShowCreateTaskForm={setShowCreateTaskForm} />
+                ) : (
+                    <button className="btn btn-sm btn-secondary" onClick={handleCreateTaskClick}>Create Task</button>
+                )}
+            </div>
         </div>
     )
 }

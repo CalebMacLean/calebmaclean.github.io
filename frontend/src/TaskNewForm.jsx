@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 
 import PomodoroAPI from './PomodoroAPI';
+import './TaskNewForm.css';
 
 /** TaskNewForm Component
  * 
@@ -47,23 +48,32 @@ const TaskNewForm = ({ listId, setTasks, setShowCreateTaskForm }) => {
     // Render
     return (
         <div className='TaskNewForm'>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='title'>Title:</label>
-                <input
-                    id='title'
-                    name='title'
-                    value={formData.title}
-                    onChange={handleChange}
-                />
-                <label htmlFor='expectedPomodoros'>Expected Pomodoros:</label>
-                <input
-                    id='expectedPomodoros'
-                    name='expectedPomodoros'
-                    type='number'
-                    value={formData.expectedPomodoros}
-                    onChange={handleChange}
-                />
-                <button>Create Task</button>
+            <form className='TaskNewForm-form form' onSubmit={handleSubmit}>
+                <div className="TaskNewForm-input-wrapper form-floating">
+                    <input
+                        className='form-control'
+                        id='title'
+                        name='title'
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                    <label className="form-label" htmlFor='title'>Title:</label>
+                </div>
+                <div className="TaskNewForm-input-wrapper form-floating">
+                    <input
+                        className='form-control'
+                        id='expectedPomodoros'
+                        name='expectedPomodoros'
+                        type='number'
+                        value={formData.expectedPomodoros}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor='expectedPomodoros'>Expected Pomodoros:</label>
+                </div>
+                <div className="TaskNewForm-btn-wrapper">
+                    <button className='btn btn-sm btn-secondary TaskNewForm-btn'>Create Task</button>
+                    <button className="btn btn-sm btn-secondary TaskNewForm-btn" onClick={() => setShowCreateTaskForm(false)}>Back</button>
+                </div>
             </form>
         </div>
     );

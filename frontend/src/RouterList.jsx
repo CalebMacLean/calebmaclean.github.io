@@ -21,7 +21,7 @@ import ListDetail from './ListDetail';
  * 
  * State: none
  */
-const RouterList = ({ activeList, setActiveList, activeTask, setActiveTask }) => {
+const RouterList = ({ activeList, setActiveList, activeTask, setActiveTask, setTimerType }) => {
     return (
         <Routes>
             {/* Home Page */}
@@ -30,7 +30,8 @@ const RouterList = ({ activeList, setActiveList, activeTask, setActiveTask }) =>
                     activeList={activeList} 
                     activeTask={activeTask} 
                     setActiveTask={setActiveTask} 
-                    setActiveList={setActiveList}/>} 
+                    setActiveList={setActiveList}
+                    setTimerType={setTimerType} />} 
             />
             {/* Log In Form */}
             <Route path="/login" element={<LogIn />} />

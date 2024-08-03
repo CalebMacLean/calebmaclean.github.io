@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import PomodoroAPI from './PomodoroAPI';
+import './ListDetail.css';
 
 /** ListDetail Component
  * 
@@ -30,22 +31,30 @@ const ListDetail = () => {
 
     // Render
     return (
-        <div className="ListDetail">
+        <div className="ListDetail-wrapper">
             {list ? (
-                <div>
-                    <h3>{list.title}</h3>
-                    <p>{list.listType ? "Focus" : "Break"}</p>
-                    <p>Created by: {list.username}</p>
-                    <div>
-                        <h3>Tasks:</h3>
-                        <div>
-                            {list.tasks.map(task => (
-                                <div key={task.id}>
-                                    <h4>{task.title}</h4>
-                                    <p>{task.description}</p>
-                                    <p>{task.completedCycles}/{task.expectedPomodoros}</p>
+                <div className='ListDetail'>
+                    <div className="ListDetail-header">
+                        <h3>{list.title}</h3>
+                        <p>{list.listType ? "Focus" : "Break"}</p>
+                        <p>Created by: {list.username}</p>
+                    </div>
+                    <div className='ListDetail-main'>
+                        <div className="ListDetail-tasks-wrapper">
+                            <div className="ListDetail-tasks-header">
+                                <h3>Tasks:</h3>
+                            </div>
+                            <div className="ListDetail-tasks-main">
+                                <div className='ListDetail-tasks'>
+                                    {list.tasks.map(task => (
+                                        <div className='ListDetail-task' key={task.id}>
+                                            <h4>{task.title}</h4>
+                                            <p>{task.description}</p>
+                                            <p>{task.completedCycles}/{task.expectedPomodoros}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
                 </div>
