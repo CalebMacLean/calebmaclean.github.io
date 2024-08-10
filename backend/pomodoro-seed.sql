@@ -22,7 +22,7 @@ VALUES ('testadmin',
 
 -- inserts test friend request from testuser to testadmin
 INSERT INTO friends (sender, receiver, request_status)
-VALUES ('testuser', 'testadmin', FALSE);
+VALUES ('testadmin', 'testuser', FALSE);
 
 -- inserts test list for testuser
 INSERT INTO lists (username)

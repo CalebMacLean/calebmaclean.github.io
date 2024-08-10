@@ -8,7 +8,7 @@ CREATE TABLE users (
     last_name VARCHAR(50) NOT NULL,
     -- Email must contain an @ and a . after the @
     email TEXT NOT NULL
-        CHECK (position('@' IN email) > 1 AND position('.' IN email) > position('@' IN email) + 1),
+        CHECK (position('@' IN email) > 1 AND position('.' IN substring(email from position('@' IN email))) > 1),
     -- User Profile Information
     avatar TEXT DEFAULT 'assets/default_pfp.jpg',
     -- User Statistics
