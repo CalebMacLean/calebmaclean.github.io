@@ -14,6 +14,7 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_HOST = process.env.DB_HOST;
 const DB_PORT = process.env.DB_PORT;
+const DB_URL = process.env.DB_URL;
 
 /** Database Uri Function
  * 
@@ -22,23 +23,12 @@ const DB_PORT = process.env.DB_PORT;
  * Parameters: -none
  */
 function getDatabaseUri(user = DB_USER, password = DB_PASSWORD, host = DB_HOST, port = DB_PORT) {
-    // log parameters vals
-    // console.log('user: ', user);
-    // console.log('password: ', password);
-    // console.log('host: ', host);
-    // console.log('port: ', port);
-
-    // env vars
-    // const u = process.env.DB_USER;
-    // const p = process.env.DB_PASSWORD;
-    // const h = process.env.DB_HOST
-    // const port = process.env.DB_PORT;
+    if ( DB_URL !== undefined ) {
+        return DB_URL;
+    }
 
     // database name depends on app's environment
     const name = process.env.NODE_ENV === "test" ? "pomodoro_test" : "pomodoro";
-
-    // console.log(`postgres://${user}:${password}@${host}:${port}/${name}`);
-
     return `postgres://${user}:${password}@${host}:${port}/${name}`;
 };
 
