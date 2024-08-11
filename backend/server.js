@@ -3,6 +3,7 @@
 
 /** Server start up logic */
 // Imports
+const express = require('express');
 const app = require("./app");
 const { PORT } = require("./config");
 const path = require('path');
