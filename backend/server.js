@@ -8,10 +8,10 @@ const app = require("./app");
 const { PORT } = require("./config");
 const path = require('path');
 
-app.use(express.static(path.join( _dirname, '..', 'frontend', 'dist')));
+app.use(express.static(path.join( __dirname, '..', 'frontend', 'dist')));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join( _dirname, '..', 'frontend', 'dist', 'index.html'));
+    res.sendFile(path.join( __dirname, '..', 'frontend', 'dist', 'index.html'));
 });
 
 app.listen(PORT, function() {
