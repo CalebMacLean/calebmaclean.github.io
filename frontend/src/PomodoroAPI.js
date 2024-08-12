@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Global Vars
-const BASE_URL = REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = import.meta.env.API_BASE_URL || "http://localhost:3001";
 
 /** API Class
  * 
