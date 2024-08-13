@@ -184,7 +184,9 @@ const Profile = ({ }) => {
                                     <div className='Profile-lists-main'>
                                         <div className='Profile-lists'>
                                             {user.lists.map(list => (
-                                                <span className='Profile-list' key={list.id}>{list.title}</span>
+                                                <div className="Profile-list card">
+                                                    <span key={list.id}>{list.title}</span>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
@@ -201,8 +203,8 @@ const Profile = ({ }) => {
                                 <>
                                     <div className='Profile-friends-main'>
                                         {friends.map(friend => (
-                                            <div className="card">
-                                                <span className='Profile-friend' key={friend.username}>{friend.username}</span>
+                                            <div className="card Profile-friend">
+                                                <span key={friend.username}>{friend.username}</span>
                                             </div>
                                         ))}
                                     </div>

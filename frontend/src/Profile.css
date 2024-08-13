@@ -154,9 +154,9 @@
     align-items: flex-start;
 }
 
-.Profile-friend {
-    width: 45%;
+.Profile-friend{
     gap: 5%;
+    min-width: 45%;
     min-height: 4vh;
     display: flex;
     flex-direction: column;
