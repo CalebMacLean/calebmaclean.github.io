@@ -110,68 +110,71 @@ const Profile = ({ }) => {
                     </div>
 
                     <div className="Profile-main">
-                        <form className='Profile-form form' onSubmit={handleSubmit}>
-                            <div className="form-header">
-                                <h2>Edit Profile</h2>
-                            </div>
-                            <div className="form-group">
-                                <label className='form-label' htmlFor='username'>Username:</label>
-                                <input
-                                    className='form-control'
-                                    type='text'
-                                    id='username'
-                                    name='username'
-                                    defaultValue={user.username}
-                                    onChange={handleChange}
-                                    disabled
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className='form-label' htmlFor='firstName'>First Name:</label>
-                                <input
-                                    className='form-control'
-                                    type='text'
-                                    id='firstName'
-                                    name='firstName'
-                                    defaultValue={user.firstName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className='form-label' htmlFor='lastName'>Last Name:</label>
-                                <input
-                                    className='form-control'
-                                    type='text'
-                                    id='lastName'
-                                    name='lastName'
-                                    defaultValue={user.lastName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className='form-label' htmlFor='email'>Email:</label>
-                                <input
-                                    className='form-control'
-                                    type='email'
-                                    id='email'
-                                    name='email'
-                                    defaultValue={user.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className='form-label' htmlFor='avatar'>Avatar:</label>
-                                <input
-                                    className='form-control'
-                                    type='text'
-                                    id='avatar'
-                                    name='avatar'
-                                    defaultValue={user.avatar}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <button className='btn btn-sm btn-secondary'>Save Changes</button>
-                        </form>
+                        <div className="Profile-form-wrapper">
+
+                            <form className='Profile-form form' onSubmit={handleSubmit}>
+                                <div className="form-header">
+                                    <h2>Edit Profile</h2>
+                                </div>
+                                <div className="form-group">
+                                    <label className='form-label' htmlFor='username'>Username:</label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        id='username'
+                                        name='username'
+                                        defaultValue={user.username}
+                                        onChange={handleChange}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className='form-label' htmlFor='firstName'>First Name:</label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        id='firstName'
+                                        name='firstName'
+                                        defaultValue={user.firstName}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className='form-label' htmlFor='lastName'>Last Name:</label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        id='lastName'
+                                        name='lastName'
+                                        defaultValue={user.lastName}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className='form-label' htmlFor='email'>Email:</label>
+                                    <input
+                                        className='form-control'
+                                        type='email'
+                                        id='email'
+                                        name='email'
+                                        defaultValue={user.email}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className='form-label' htmlFor='avatar'>Avatar:</label>
+                                    <input
+                                        className='form-control'
+                                        type='text'
+                                        id='avatar'
+                                        name='avatar'
+                                        defaultValue={user.avatar}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <button className='btn btn-sm btn-secondary'>Save Changes</button>
+                            </form>
+                        </div>
                         <div className='Profile-lists-wrapper'>
                             <div className='Profile-lists-header'>
                                 <h3>Lists</h3>
@@ -198,7 +201,9 @@ const Profile = ({ }) => {
                                 <>
                                     <div className='Profile-friends-main'>
                                         {friends.map(friend => (
-                                            <span className='Profile-friend' key={friend.username}>{friend.username}</span>
+                                            <div className="card">
+                                                <span className='Profile-friend' key={friend.username}>{friend.username}</span>
+                                            </div>
                                         ))}
                                     </div>
                                 </>
@@ -219,7 +224,7 @@ const Profile = ({ }) => {
                                 <>
                                     <div className='Profile-requests-main'>
                                         {friendRequests.map(request => (
-                                            <div className='Profile-request' key={request.username}>
+                                            <div className='card Profile-request' key={request.username}>
                                                 <div className="Profile-request-left">
                                                     <p key={request.username}>{request.username}</p>
                                                 </div>
