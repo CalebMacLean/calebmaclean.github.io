@@ -22,8 +22,8 @@
 }
 
 .Profile-img {
-    width: 10rem;
-    height: 10rem;
+    min-width: 10rem;
+    min-height: 10rem;
     border-radius: 50%;
     border: 0.2rem solid #fff;
     box-shadow: 0 0 0.5rem 0.1rem #000;
